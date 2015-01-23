@@ -1,5 +1,5 @@
-var ResourceStorage = {
-    resource1: 0,
-    resource2: 0,
-    resource3: 0
+function ResourceStorage(){
+    this.resource1 = 0;
+    this.resource2 = 0;
+    this.resource3 = 0;
 };
