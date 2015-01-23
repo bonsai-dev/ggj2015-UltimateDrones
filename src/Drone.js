@@ -4,6 +4,6 @@ function Drone(){
 
 }
 
-Drone.prototye.getInventory = function(){
+Drone.prototype.getInventory = function(){
     return this.inventory;
 }
