@@ -1,7 +1,7 @@
 'use strict';
 
 function ResourceDisplay(){
-    this.game;
+    this.game = null;
 
     this.res1Text = null;
     this.res2Text = null;
@@ -18,12 +18,13 @@ ResourceDisplay.prototype.preload = function () {
 ResourceDisplay.prototype.create = function (resStorage) {
     this.resStorage = resStorage;
 
-    this.res1Text = this.game.add.text(game.world.centerX-300, 0, this.initText, this.initStyle);
-    this.res2Text = this.game.add.text(game.world.centerX+100, 0, this.initText, this.initStyle);
+    this.res1Text = this.game.add.text(game.world.centerX-350, 0, this.initText, this.initStyle);
+    this.res2Text = this.game.add.text(game.world.centerX-100, 0, this.initText, this.initStyle);
+    this.res3Text = this.game.add.text(game.world.centerX+150, 0, this.initText, this.initStyle);
 };
 
 ResourceDisplay.prototype.update = function () {
-    this.res1Text.setText("Resource 1: " +  this.resStorage.resource1);
-    this.res2Text.setText("Resource 2: " +  this.resStorage.resource2);
-    //this.res1Text.setText(ResourceStorage.resource1);
+    this.res1Text.setText(Static.Strings.Resources.resource1Name + ": " +  this.resStorage.resource1);
+    this.res2Text.setText(Static.Strings.Resources.resource2Name + ": " +  this.resStorage.resource2);
+    this.res3Text.setText(Static.Strings.Resources.resource3Name + ": " +  this.resStorage.resource3);
 };
