@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'Ultimate Drones');
+var game = new Phaser.Game(1280, 800, Phaser.AUTO, 'Ultimate Drones');
 
 
 var playState = new Play();
