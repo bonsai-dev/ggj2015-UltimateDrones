@@ -12,7 +12,7 @@ class Score(ndb.Model):
 class MainPage(webapp2.RequestHandler):
     def get(self):
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-        name = self.request.get('name', 'scores')
+        name = self.request.get('name')
         score_query = Score.query(ancestor=ndb.Key('Score', 'scores')).order(-Score.score)
         scores = score_query.fetch(10)
 
@@ -31,7 +31,7 @@ class MainPage(webapp2.RequestHandler):
         result = json.loads(self.request.body)
         score.score = result['score']
         score.name = result['name']
-        score.country = self.request.getHeader("X-AppEngine-Country")
+        score.country = self.request.headers.get("X-AppEngine-Country")
         score.put()
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     def post(self):
@@ -39,7 +39,7 @@ class MainPage(webapp2.RequestHandler):
         result = json.loads(self.request.body)
         score.score = result['score']
         score.name = result['name']
-        score.country = self.request.getHeader("X-AppEngine-Country")
+        score.country = self.request.headers.get("X-AppEngine-Country")
         score.put()
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
 
