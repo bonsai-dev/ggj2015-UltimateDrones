@@ -7,6 +7,7 @@ class Score(ndb.Model):
     name = ndb. StringProperty(indexed=False)
     score = ndb.IntegerProperty(indexed=True)
     date = ndb.DateTimeProperty(auto_now_add=True)
+    country = ndb. StringProperty(indexed=False)
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -22,6 +23,7 @@ class MainPage(webapp2.RequestHandler):
                 'score':score.score,
                 'name':score.name,
                 'date':score.date.strftime('%c'),
+                'country':score.country
             })
         self.response.write(json.dumps(result))
         self.response.headers['Content-Type'] = 'application/json'
@@ -31,6 +33,7 @@ class MainPage(webapp2.RequestHandler):
         result = json.loads(self.request.body)
         score.score = result['score']
         score.name = result['name']
+        score.country = request.getHeader("X-AppEngine-Country")
         score.put()
     def post(self):
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
@@ -38,6 +41,7 @@ class MainPage(webapp2.RequestHandler):
         result = json.loads(self.request.body)
         score.score = result['score']
         score.name = result['name']
+        score.country = request.getHeader("X-AppEngine-Country")
         score.put()
 
 application = webapp2.WSGIApplication([
