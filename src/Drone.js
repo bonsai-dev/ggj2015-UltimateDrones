@@ -110,7 +110,19 @@ Drone.prototype = {
 
           } else if(this.task.type === "reloadFromHub") {
               if(this.status === 'idle') {
-                  console.log("set status to loading");
+                  this.move(
+                      this.task.slot.x,
+                      this.task.slot.y,
+                      function (that) {
+                          var closuredTask = function() {
+                              that.status = 'loading';
+                              console.log("arrived at loading slot!");
+                          };
+                          return closuredTask;
+                      }(this)
+                  );
+                  this.status = 'moving';
+                  /*console.log("set status to loading");
                   this.status = 'isLoading';
                   var acceptEnergy = function (that) {
                       return function (transferredEnergy) {
@@ -132,7 +144,7 @@ Drone.prototype = {
                           });
                       }
                   }(this);
-                  this.task.energySource(acceptEnergy);
+                  this.task.energySource(acceptEnergy);*/
               }
           } else  {
               this.task();
