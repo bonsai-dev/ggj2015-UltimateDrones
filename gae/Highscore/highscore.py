@@ -26,23 +26,22 @@ class MainPage(webapp2.RequestHandler):
                 'country':score.country
             })
         self.response.write(json.dumps(result))
-        self.response.headers['Content-Type'] = 'application/json'
     def put(self):
-        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
         score = Score(parent=ndb.Key('Score', 'scores'))
         result = json.loads(self.request.body)
         score.score = result['score']
         score.name = result['name']
-        score.country = request.getHeader("X-AppEngine-Country")
+        score.country = self.request.getHeader("X-AppEngine-Country")
         score.put()
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     def post(self):
-        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
         score = Score(parent=ndb.Key('Score', 'scores'))
         result = json.loads(self.request.body)
         score.score = result['score']
         score.name = result['name']
-        score.country = request.getHeader("X-AppEngine-Country")
+        score.country = self.request.getHeader("X-AppEngine-Country")
         score.put()
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
 
 application = webapp2.WSGIApplication([
     ('/', MainPage),
