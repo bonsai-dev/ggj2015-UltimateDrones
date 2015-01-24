@@ -9,7 +9,7 @@ function Drone(x, y, game){
     this.energy = 100;
     this.health = 100;
 
-    this.healthText = game.add.text(x, y, this.health, this.textStyle);
+    //this.healthText = game.add.text(x, y, this.health, this.textStyle);
 
     this.game = game;
     this.sprite = game.add.sprite(x,y, 'spacer');
@@ -32,7 +32,7 @@ Drone.prototype = {
       //console.log(tweenSpeed);
 
       this.tween.stop(false);
-      this.tween = this.game.add.tween(this.healthText).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
+      //this.tween = this.game.add.tween(this.healthText).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
       this.tween = this.game.add.tween(this.sprite.body).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
       this.tween.onComplete.add(callback, this);
 
@@ -48,13 +48,13 @@ Drone.prototype = {
                   var moveY = 0;
                   var clearZone = 50;
 
-                  while(moveX < this.task.dropOff.x + clearZone){
+                 // while(moveX < this.task.dropOff.x + clearZone){
                       moveX = randomBetween(this.task.area.x1, this.task.area.x2);
-                  }
+                 // }
 
-                  while(moveY < this.task.dropOff.y + clearZone){
+                 // while(moveY < this.task.dropOff.y + clearZone){
                       moveY = randomBetween(this.task.area.y1, this.task.area.y2);
-                  }
+                 // }
 
                   this.move(
                       moveX,
@@ -64,6 +64,14 @@ Drone.prototype = {
                               if(that.inventory < that.maxInventory) {
 
                                   that.game.time.events.add(Phaser.Timer.SECOND * that.collectSpeed, function(){
+
+                                      var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+1', {font: '25px Arial', fill: '#ffffff', align: 'left'});
+                                      var moveUp = that.game.add.tween(plusOne).to({y: that.sprite.y - 50}, 1000, Phaser.Easing.Linear.None, true);
+                                      var fade = that.game.add.tween(plusOne).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+
+                                      fade.onComplete.add(function(){
+                                          plusOne, moveUp, fade = null;
+                                      }, this);
 
                                       that.inventory += 0.5;
                                       console.log("collecting", that.inventory);
