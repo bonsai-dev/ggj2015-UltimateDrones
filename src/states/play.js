@@ -17,6 +17,8 @@ Play.prototype = {
         this.game.load.image('factory', 'assets/factory.png');
         this.game.load.image('hub', 'assets/hub.png');
         this.game.load.image('workshop', 'assets/workshop.png');
+        this.game.load.image('crystal', 'assets/crystal.png');
+        this.game.load.image('farm1', 'assets/farm1.png');
     },
 
     create: function(){
