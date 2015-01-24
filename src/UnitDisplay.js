@@ -42,8 +42,10 @@ UnitDisplay.prototype =
         this.rectangle.clear();
 
         var parent = this;
-        if(this.unit == null)
+        if(this.unit == null) {
+            this.textObject.setText('');
             return;
+        }
         if(!this.unit.__proto__.hasOwnProperty('getDisplayNames'))
             return;
         var varNames = this.unit.getDisplayNames();
