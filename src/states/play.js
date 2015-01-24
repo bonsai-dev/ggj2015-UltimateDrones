@@ -60,6 +60,13 @@ Play.prototype = {
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
 
+        this.testDrone.sprite.bringToTop();
+
+        this.testDrone2.sprite.bringToTop();
+
+        this.testDrone3.sprite.bringToTop();
+       
+
         this.testHub = new Hub(600, 400, this.game, 'hub');
         this.testHub.assignWorker(this.loadTestDrone);
     },

@@ -23,6 +23,7 @@ function Drone(x, y, game){
     this.reloadSpeed = 1;
     this.tween = this.game.add.tween(this.sprite);
     this.task = null;
+
 }
 
 

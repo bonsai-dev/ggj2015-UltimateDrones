@@ -33,12 +33,37 @@ Menu.prototype = {
         title.anchor.setTo(0.5, 0.5);
 
         game.add.tween(drone).to( { y: 470 }, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
+        game.add.tween(title.scale).to( { x: 1.1, y: 1.1 }, 1300, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
 
 
         var startButton = this.game.add.button(150, 550, 'start', this.startGame, this, 1, 0);
         var scoreButton = this.game.add.button(150, 620, 'highscore', this.startGame, this, 1, 0);
 
-        
+        startButton.events.onInputOver.add(function(btn){
+            btn.scale.x = 1.1;
+            btn.scale.y = 1.1;
+
+        }, this);
+
+        startButton.events.onInputOut.add(function(btn){
+            btn.scale.x = 1;
+            btn.scale.y = 1;
+
+        }, this);
+
+        scoreButton.events.onInputOver.add(function(btn){
+            btn.scale.x = 1.1;
+            btn.scale.y = 1.1;
+
+        }, this);
+
+        scoreButton.events.onInputOut.add(function(btn){
+            btn.scale.x = 1;
+            btn.scale.y = 1;
+
+        }, this);
+
+
 
     },
     
