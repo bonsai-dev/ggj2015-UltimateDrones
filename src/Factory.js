@@ -1,4 +1,4 @@
-function Factory(x, y, game, sprite){
+function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
     this.game = game;
     this.sprite = this.game.add.sprite(x,y, sprite);
     this.assignedWorkers = [];
@@ -11,6 +11,13 @@ function Factory(x, y, game, sprite){
     this.productionRate = 0.01;
     this.textStyle =  {font: '25px Arial', fill: '#ffffff', align: 'left'};
     this.text = this.game.add.text(x, y, this.storage, this.textStyle);
+    this.farmCoords = {
+        x1: xFarm,
+        x2: xFarm+sizeFarm,
+        y1: yFarm,
+        y2: yFarm+sizeFarm
+    }
+    this.farmImage = this.game.add.tileSprite(this.farmCoords.x1, this.farmCoords.y1, sizeFarm, sizeFarm, 'farm1');
 }
 
 Factory.prototype =
@@ -30,7 +37,7 @@ Factory.prototype =
         this.assignedWorkers.push(worker);
         worker.assignTask({
             type:"collectResource",
-            area:{x1:100, x2:300, y1:100, y2:300},
+            area:this.farmCoords,
             dropOff: {x:this.sprite.x, y:this.sprite.y},
             delivery: this.acceptResources()
         });

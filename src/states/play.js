@@ -15,6 +15,7 @@ Play.prototype = {
         this.game.load.image('spacer', 'assets/drone.png');
 
         this.game.load.image('factory', 'assets/factory.png');
+        this.game.load.image('fab1', 'assets/fab1.png');
         this.game.load.image('hub', 'assets/hub.png');
         this.game.load.image('workshop', 'assets/workshop.png');
         this.game.load.image('crystal', 'assets/crystal.png');
@@ -48,7 +49,7 @@ Play.prototype = {
         this.factorys.push(new Factory(400, 600, this.game, "factory"));
         this.factorys.push(new Factory(200, 100, this.game, "workshop"));*/
 
-        this.testFactory = new Factory(100,100, this.game, "factory");
+        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1");
         this.testFactory.assignWorker(this.testDrone);
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
