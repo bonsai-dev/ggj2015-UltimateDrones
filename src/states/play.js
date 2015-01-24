@@ -3,8 +3,6 @@
 function Play(){
     this.resDisplay = null;
     this.resStorage = null;
-
-
     this.drones = [];
     this.factorys = [];
 }
@@ -75,6 +73,8 @@ Play.prototype = {
 
         this.testHub = new Hub(600, 400, this.game);
         this.testHub.assignWorker(this.loadTestDrone);
+
+        this.unitDisplay = new UnitDisplay(100,100,game); //Unit Display soll über allem sein
     },
 
 
@@ -99,8 +99,7 @@ Play.prototype = {
         this.testFactory.tick();
         this.testHub.tick();
         this.loadTestDrone.tick();
-
-
+        this.unitDisplay.show();
         //Objekte auswählen geht so:
         //getObjectsUnderPointer(pointer, group, callback, callbackContext)
         //if (Phaser.Rectangle.contains(seat.body, passenger.x, passenger.y))
@@ -145,5 +144,9 @@ Play.prototype = {
 
              }
          );
-     }
+     },
+    setSelectedUnit: function(unit){
+        this.selectedUnit = unit;
+        this.unitDisplay.setUnit(unit);
+    }
 };

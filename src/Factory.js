@@ -8,15 +8,16 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
 
     var parent = this;
     this.sprite.events.onInputDown.add(function(sprite, pointer){
-        if(game.selectedUnit instanceof Drone)
+        if(game.state.getCurrentState().selectedUnit instanceof Drone)
         {
             console.log("Assign Drone to Factory")
-            parent.assignWorker(game.selectedUnit);
-            game.selectedUnit = null;
+            parent.assignWorker(game.state.getCurrentState().selectedUnit);
+            game.state.getCurrentState().state.getCurrentState().setSelectedUnit(null);
+            return;
         }
-        if(game.selectedUnit == null)
+        if(game.state.getCurrentState().selectedUnit == null)
         {
-            game.selectedUnit = parent;
+            game.state.getCurrentState().setSelectedUnit(parent);
         }
     }, this);
 
@@ -65,6 +66,16 @@ Factory.prototype =
         return function (resources) {
             that.storage += resources;
         }
+    },
+    getDisplayNames: function()
+    {
+        return [
+            {name: 'Assigned workers', var: 'assignedWorkers', type: 'count'},
+            {name: 'Storage', var: 'storage'},
+            {name: 'Maximum storage', var: 'maximumStorage'},
+            {name: 'Production rate', var: 'productionRate'}
+        ];
     }
+
 
 };

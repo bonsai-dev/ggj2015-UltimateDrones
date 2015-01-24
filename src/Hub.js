@@ -33,15 +33,16 @@ function Hub(x, y, game){
     this.sprite.inputEnabled = true;
     var parent = this;
     this.sprite.events.onInputDown.add(function(sprite, pointer){
-        if(game.selectedUnit instanceof Drone)
+        if(game.state.getCurrentState().selectedUnit instanceof Drone)
         {
             console.log("Assign Drone to Hub")
             parent.assignWorker(game.selectedUnit);
-            game.selectedUnit = null;
+            game.state.getCurrentState().selectedUnit = null;
+            return;
         }
-        if(game.selectedUnit == null)
+        if(game.state.getCurrentState().selectedUnit == null)
         {
-            game.selectedUnit = parent;
+            game.state.getCurrentState().selectedUnit = parent;
         }
     }, this);
 
@@ -86,6 +87,14 @@ Hub.prototype =
                 acceptEnergy(0);
             }
         }
+    },
+    getDisplayNames: function()
+    {
+        return [
+            {name: 'Assigned workers', var: 'assignedWorkers', type: 'count'},
+            {name: 'Storage', var: 'storedEnergy'},
+            {name: 'Maximum storage', var: 'maxStoredEnergy'},
+            {name: 'Regeneration rate', var: 'energyRegeneration'}
+        ];
     }
-
 };
