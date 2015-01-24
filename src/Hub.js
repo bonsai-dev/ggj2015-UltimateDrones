@@ -3,8 +3,8 @@ function Hub(x, y, game){
 
 
     //sprites
-    this.body = this.game.add.sprite(x,y, 'hubBody');
-    this.body.scale = new PIXI.Point(2, 2);
+    this.sprite = this.game.add.sprite(x,y, 'hubBody');
+    this.sprite.scale = new PIXI.Point(2, 2);
     this.ring = this.game.add.sprite(x,y, 'hubRing', 3);
     this.ring.scale = new PIXI.Point(2, 2);
     this.ringOverlay = this.game.add.sprite(x,y, 'hubOver', 3);
