@@ -3,4 +3,4 @@ function Hub(){
 
 }
 
-Hub.prototype = new Building();
+//Hub.prototype = new Building();

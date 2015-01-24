@@ -12,7 +12,11 @@ function Play(){
 Play.prototype = {
     preload: function(){
         this.game.load.image('bg', 'assets/bg.png');
-        this.game.load.image('spacer', 'assets/spacer.jpg');
+        this.game.load.image('spacer', 'assets/drone.png');
+
+        this.game.load.image('factory', 'assets/factory.png');
+        this.game.load.image('hub', 'assets/hub.png');
+        this.game.load.image('workshop', 'assets/workshop.png');
     },
 
     create: function(){
@@ -32,22 +36,40 @@ Play.prototype = {
 
         this.resDisplay.create(this.resStorage);
 
-        this.drones.push(new Drone(10, 10, this.game));
-        this.drones.push(new Drone(10, 10, this.game));
 
-        this.factorys.push(new Building(600, 600, this.game));
+        for(var i = 0; i < 1000; i++){
+            this.drones.push(new Drone(10, 10, this.game));
+
+        }
+
+
+
+        this.factorys.push(new Building(600, 600, this.game, "hub"));
+        this.factorys.push(new Building(400, 600, this.game, "factory"));
+        this.factorys.push(new Building(200, 100, this.game, "workshop"));
     },
+
+
     update: function(){
         var game = this.game;
-        this.resStorage.resource1 +=1;
-        this.resStorage.resource2 +=0.5;
+        this.resStorage.resource1 +=1; //remove
+        this.resStorage.resource2 +=2; //remove
         this.resDisplay.update();
 
         var factorys = this.factorys;
         this.drones.forEach(
           function(drone){
+              if(drone.status === 'idle'){
+                  var x = Math.floor(Math.random() * 2000);
+                  var y = Math.floor(Math.random() * 2000);
+
+                  drone.move(x,y, function(){
+                      drone.status = 'idle';
+                  });
+                  drone.status = 'moving';
+              }
               drone.tick();
-              game.physics.arcade.overlap(drone, factorys, drone.harvest, null, drone);
+
           }
         );
         this.factorys.forEach(
@@ -65,7 +87,7 @@ Play.prototype = {
                 this.game.camera.x += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
                 this.game.camera.y += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
 
-                this.drones[0].move(this.game.input.activePointer.position.x,this.game.input.activePointer.position.y);
+                //this.drones[0].move(this.game.input.activePointer.position.x,this.game.input.activePointer.position.y);
             }
             //first tick, save current location
             this.game.origDragPoint = this.game.input.activePointer.position.clone();

@@ -1,6 +1,10 @@
 function Drone(x, y, game){
 
     this.inventory = null;
+    this.status = 'idle';
+    this.assignedBuilding = 0;
+    this.currentBuilding = 0;
+
     this.game = game;
     this.sprite = game.add.sprite(x,y, 'spacer');
     this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -15,20 +19,19 @@ function Drone(x, y, game){
 
 
 Drone.prototype = {
-  move: function (mX, mY) {
+  move: function (mX, mY, callback) {
       var tweenSpeed = Math.sqrt((this.sprite.body.x-mX)*(this.sprite.body.x-mX)+(this.sprite.body.y-mY)*(this.sprite.body.y-mY))/this.moveSpeed;
       console.log(tweenSpeed);
 
-      //Das Tween macht vielleicht ich Probleme mit der Kollisionserkennung.
       this.tween.stop(false);
       this.tween = this.game.add.tween(this.sprite.body).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
+      this.tween.onComplete.add(callback, this);
+
   },
   tick: function()
   {
 
-  },
-    harvest: function(drone, factory)
-    {
-        console.log("Collision happened");
-    }
+  }
+
+
 };
