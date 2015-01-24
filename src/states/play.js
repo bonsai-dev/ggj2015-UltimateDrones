@@ -16,7 +16,7 @@ Play.prototype = {
         this.resStorage = new ResourceStorage();
 
         //world setup
-        this.game.world.setBounds(0, 0, 2000, 2000); //2000x2000
+        this.game.world.setBounds(0, 0, 2048, 2048); //2000x2000
         this.land = this.game.add.tileSprite(0, 0, 2000, 2000, 'bg');
         //this.land.fixedToCamera = true;
 
