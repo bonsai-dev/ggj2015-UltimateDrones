@@ -12,20 +12,38 @@ function Menu(){
 
 Menu.prototype = {
     preload: function(){
+        this.game.load.image('title', 'assets/title.png');
+        this.game.load.image('titleback', 'assets/titleback.png');
+        this.game.load.image('drones', 'assets/drones.png');
+
+        this.game.load.spritesheet('start', 'assets/start.png', 263, 61);
+        this.game.load.spritesheet('highscore', 'assets/high.png', 421, 52);
+
 
     },
 
     create: function(){
-        this.titleText = this.game.add.text(this.game.world.centerX, 80, 'Ultimate Drones', this.titleStyle);
-        this.titleText.anchor.setTo(0.5, 0.5);
-        this.playText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, 'Play', this.buttonStyle);
-        this.playText.anchor.setTo(0.5, 0.5);
-        this.highscoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 30, 'Highscore', this.buttonStyle);
-        this.highscoreText.anchor.setTo(0.5, 0.5);
+        var titleback = this.game.add.sprite(640, 180, 'titleback');
+        titleback.anchor.setTo(0.5, 0.5);
+
+        var drone = this.game.add.sprite(850, 440, 'drones');
+        drone.anchor.setTo(0.5, 0.5);
+
+        var title = this.game.add.sprite(640, 180, 'title');
+        title.anchor.setTo(0.5, 0.5);
+
+        game.add.tween(drone).to( { y: 470 }, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
+
+
+        var startButton = this.game.add.button(150, 550, 'start', this.startGame, this, 1, 0);
+        var scoreButton = this.game.add.button(150, 620, 'highscore', this.startGame, this, 1, 0);
+
+        
+
     },
     
     update: function(){
-        this.game.input.onDown.addOnce(this.startGame, this);
+        //this.game.input.onDown.addOnce(this.startGame, this);
     },
 
     startGame: function(){
