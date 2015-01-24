@@ -48,13 +48,13 @@ Drone.prototype = {
                   var moveY = 0;
                   var clearZone = 50;
 
-                  while(moveX < this.task.dropOff.x + clearZone){
+                  do {
                       moveX = randomBetween(this.task.area.x1, this.task.area.x2);
-                  }
+                  } while(Math.abs(moveX-this.task.dropOff.x) < clearZone);
 
-                  while(moveY < this.task.dropOff.y + clearZone){
+                  do {
                       moveY = randomBetween(this.task.area.y1, this.task.area.y2);
-                  }
+                  } while (Math.abs(moveY - this.task.dropOff.y) < clearZone);
 
                   this.move(
                       moveX,
