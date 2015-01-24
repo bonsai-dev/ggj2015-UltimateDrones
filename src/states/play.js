@@ -23,6 +23,7 @@ Play.prototype = {
         this.game.load.image('farm1', 'assets/farm1.png');
 
         this.game.load.spritesheet('fab1anim', 'assets/fab1anim.png', 128, 128);
+        this.selectedUnit = null;
     },
 
     create: function(){
@@ -32,7 +33,7 @@ Play.prototype = {
         //world setup
         this.game.world.setBounds(0, 0, 2048, 2048); //2000x2000
         this.land = this.game.add.tileSprite(0, 0, 2048, 2048, 'bg');
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        //this.game.physics.startSystem(Phaser.Physics.ARCADE);
         //this.land.fixedToCamera = true;
 
         //set start resources
@@ -98,6 +99,7 @@ Play.prototype = {
 
         //Objekte auswählen geht so:
         //getObjectsUnderPointer(pointer, group, callback, callbackContext)
+        //if (Phaser.Rectangle.contains(seat.body, passenger.x, passenger.y))
 
         if (this.game.input.activePointer.isDown) {
             if (this.game.origDragPoint) {

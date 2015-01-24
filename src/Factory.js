@@ -3,7 +3,22 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
     this.sprite = this.game.add.sprite(x,y, sprite);
     this.sprite.animations.add('active');
     this.sprite.animations.play('active', 6, true);
+    this.sprite.inputEnabled = true;
     this.assignedWorkers = [];
+
+    var parent = this;
+    this.sprite.events.onInputDown.add(function(sprite, pointer){
+        if(game.selectedUnit instanceof Drone)
+        {
+            console.log("Assign Drone to Factory")
+            parent.assignWorker(game.selectedUnit);
+            game.selectedUnit = null;
+        }
+        if(game.selectedUnit == null)
+        {
+            game.selectedUnit = parent;
+        }
+    }, this);
 
     //this.sprite.body.customSeparateX = true;
     //this.sprite.body.customSeparateY = true;

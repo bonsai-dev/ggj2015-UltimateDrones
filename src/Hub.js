@@ -15,6 +15,21 @@ function Hub(x, y, game, sprite){
       slot3: null
     };
 
+    this.sprite.inputEnabled = true;
+    var parent = this;
+    this.sprite.events.onInputDown.add(function(sprite, pointer){
+        if(game.selectedUnit instanceof Drone)
+        {
+            console.log("Assign Drone to Hub")
+            parent.assignWorker(game.selectedUnit);
+            game.selectedUnit = null;
+        }
+        if(game.selectedUnit == null)
+        {
+            game.selectedUnit = parent;
+        }
+    }, this);
+
 }
 
 Hub.prototype =
