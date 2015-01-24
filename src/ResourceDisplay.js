@@ -15,9 +15,9 @@ function ResourceDisplay(game){
 ResourceDisplay.prototype.create = function (resStorage) {
     this.resStorage = resStorage;
 
-    this.res1Text = this.game.add.text(game.world.centerX-350, 0, this.initText, this.initStyle);
-    this.res2Text = this.game.add.text(game.world.centerX-100, 0, this.initText, this.initStyle);
-    this.res3Text = this.game.add.text(game.world.centerX+150, 0, this.initText, this.initStyle);
+    this.res1Text = this.game.add.text(0, 0, this.initText, this.initStyle);
+    this.res2Text = this.game.add.text(250, 0, this.initText, this.initStyle);
+    this.res3Text = this.game.add.text(500, 0, this.initText, this.initStyle);
 };
 
 ResourceDisplay.prototype.update = function () {
