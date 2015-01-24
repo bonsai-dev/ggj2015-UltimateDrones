@@ -4,12 +4,14 @@
 'use strict'
 
 function HighScore(){
-    this.url = 'http://localhost:8080/';
+    this.url = 'http://learned-thunder-834.appspot.com/';
     this.scores = null;
     this.textStyle =  {font: '25px Arial', fill: '#ffffff', align: 'left'};
     this.scoreText =  null;
     this.isSubmittedtText =  null;
     this.isSubmitted = false;
+    this.name = "";
+    this.nameText = null;
 }
 
 HighScore.prototype = {
@@ -42,23 +44,38 @@ HighScore.prototype = {
     },
 
     create: function(){
-        this.post("Success", Math.floor(Math.random()*99999)%99999);
         this.get();
         this.scoreText = this.game.add.text(20, 60, "", this.textStyle);
         this.isSubmittedtText = this.game.add.text(20, 20, "", this.textStyle);
+        this.inputText = this.game.add.text(20, 500, "", this.textStyle);
+        game.input.keyboard.addCallbacks(this, null, null, this.keyPress);
     },
+
+    keyPress: function(char){
+        if(this.isSubmitted)
+            return;
+        if(char.charCodeAt(0)==13 || this.name.length > 10) { //Carriage-Return
+            this.post(this.name, Math.floor(Math.random() * 99999));
+            return;
+        }
+        if(char.charCodeAt(0)==8) { //Backspace
+            this.name = this.name.slice(0, -1)
+            return;
+        }
+        this.name += char;
+    },
+
     update: function(){
         var parent = this;
         if(this.scores === null)
             return;
-
         var scoresString = '';
         this.scores.forEach(function(entry) {
-            scoresString += entry.name+' | '+entry.date+' | '+entry.score+"\n";
-            //console.log(entry);
+            scoresString += entry.name+' | '+entry.country+' | '+entry.date+' | '+entry.score+"\n";
         });
         this.scoreText.setText(scoresString);
-        this.isSubmittedtText.setText("Submitted: "+this.isSubmitted)
+        this.isSubmittedtText.setText("Submitted: "+this.isSubmitted);
+        this.inputText.setText(this.name);
 
     }
 }
