@@ -1,7 +1,7 @@
 'use strict';
 
-function ResourceDisplay(){
-    this.game = null;
+function ResourceDisplay(game){
+    this.game = game;
 
     this.res1Text = null;
     this.res2Text = null;
@@ -11,9 +11,6 @@ function ResourceDisplay(){
     this.resStorage = null;
 }
 
-ResourceDisplay.prototype.preload = function () {
-    //do nothing yet
-};
 
 ResourceDisplay.prototype.create = function (resStorage) {
     this.resStorage = resStorage;
