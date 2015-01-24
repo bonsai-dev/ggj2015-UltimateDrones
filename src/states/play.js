@@ -8,6 +8,7 @@ function Play(){
 Play.prototype = {
     preload: function(){
         this.game.load.image('bg', 'assets/tile.jpg');
+        this.game.load.image('spacer', 'assets/spacer.jpg');
     },
 
     create: function(){
@@ -25,6 +26,10 @@ Play.prototype = {
         this.resStorage.resource3 = 0;
 
         this.resDisplay.create(this.resStorage);
+        this.drone1 = new Drone(10, 10, this.game);
+        this.drone1.move(300, 300);
+        this.drone2 = new Drone(10, 10, this.game);
+        this.drone2.move(600, 600);
     },
     update: function(){
         this.resStorage.resource1 +=1;
