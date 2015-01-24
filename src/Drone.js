@@ -12,7 +12,7 @@ function Drone(x, y, game){
     this.energyText = game.add.text(x, y+ 60, this.energy+"%", this.textStyle);
 
     this.game = game;
-    this.sprite = game.add.sprite(x,y, 'spacer');
+    this.sprite = game.add.sprite(x,y, 'dronex1');
     this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.game.physics.arcade.enableBody(this.sprite);
     this.sprite.body.customSeparateX = true;

@@ -13,6 +13,7 @@ Play.prototype = {
     preload: function(){
         this.game.load.image('bg', 'assets/bg.png');
         this.game.load.image('spacer', 'assets/drone.png');
+        this.game.load.image('dronex1', 'assets/dronex1.png');
 
         this.game.load.image('factory', 'assets/factory.png');
         this.game.load.image('fab1', 'assets/fab1.png');
