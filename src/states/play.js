@@ -22,6 +22,10 @@ Play.prototype = {
         this.game.load.image('crystal', 'assets/crystal.png');
         this.game.load.image('farm1', 'assets/farm1.png');
 
+        this.game.load.image('hubBody', 'assets/main.png');
+        this.game.load.spritesheet('hubRing', 'assets/ring.png',128,128);
+        this.game.load.spritesheet('hubOver', 'assets/ringalpha.png',128, 128);
+
         this.game.load.spritesheet('fab1anim', 'assets/fab1anim.png', 128, 128);
     },
 
@@ -68,7 +72,7 @@ Play.prototype = {
         this.testDrone3.sprite.bringToTop();
        
 
-        this.testHub = new Hub(600, 400, this.game, 'hub');
+        this.testHub = new Hub(600, 400, this.game);
         this.testHub.assignWorker(this.loadTestDrone);
     },
 

@@ -16,6 +16,8 @@ Menu.prototype = {
         this.game.load.image('titleback', 'assets/titleback.png');
         this.game.load.image('drones', 'assets/drones.png');
 
+        this.game.load.image('menuBg', 'assets/menuBg.png');
+
         this.game.load.spritesheet('start', 'assets/start.png', 263, 61);
         this.game.load.spritesheet('highscore', 'assets/high.png', 421, 52);
 
@@ -23,6 +25,8 @@ Menu.prototype = {
     },
 
     create: function(){
+        this.game.add.tileSprite(0, 0, 2048, 2048, 'menuBg');
+
         var titleback = this.game.add.sprite(640, 180, 'titleback');
         titleback.anchor.setTo(0.5, 0.5);
 
