@@ -9,7 +9,7 @@ function Drone(x, y, game){
     this.energy = 100;
     this.health = 100;
 
-    //this.healthText = game.add.text(x, y, this.health, this.textStyle);
+    this.energyText = game.add.text(x, y+ 60, this.energy, this.textStyle);
 
     this.game = game;
     this.sprite = game.add.sprite(x,y, 'spacer');
@@ -32,7 +32,7 @@ Drone.prototype = {
       //console.log(tweenSpeed);
 
       this.tween.stop(false);
-      //this.tween = this.game.add.tween(this.healthText).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
+      this.game.add.tween(this.energyText).to({x: mX, y: mY + 60}, tweenSpeed, Phaser.Easing.Linear.None, true);
       this.tween = this.game.add.tween(this.sprite.body).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
       this.tween.onComplete.add(callback, this);
 
@@ -72,6 +72,9 @@ Drone.prototype = {
                                       fade.onComplete.add(function(){
                                           plusOne, moveUp, fade = null;
                                       }, this);
+
+                                      that.energy -= 1;
+                                      that.energyText.setText('Energy: ' + that.energy);
 
                                       that.inventory += 0.5;
                                       console.log("collecting", that.inventory);
