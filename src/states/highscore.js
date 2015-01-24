@@ -47,17 +47,22 @@ HighScore.prototype = {
         this.get();
         this.scoreText = this.game.add.text(20, 60, "", this.textStyle);
         this.isSubmittedtText = this.game.add.text(20, 20, "", this.textStyle);
-        this.inputText = this.game.add.text(20, 400, "", this.textStyle);
+        this.inputText = this.game.add.text(20, 500, "", this.textStyle);
         game.input.keyboard.addCallbacks(this, null, null, this.keyPress);
     },
 
     keyPress: function(char){
         if(this.isSubmitted)
             return;
-        console.log("-"+char+"-");
+        if(char.charCodeAt(0)==13 || this.name.length > 10) { //Carriage-Return
+            this.post(this.name, Math.floor(Math.random() * 99999));
+            return;
+        }
+        if(char.charCodeAt(0)==8) { //Backspace
+            this.name = this.name.slice(0, -1)
+            return;
+        }
         this.name += char;
-        if(char=='' || this.name.length > 10)
-            this.post(this.name, Math.floor(Math.random()*99999));
     },
 
     update: function(){
@@ -67,7 +72,6 @@ HighScore.prototype = {
         var scoresString = '';
         this.scores.forEach(function(entry) {
             scoresString += entry.name+' | '+entry.country+' | '+entry.date+' | '+entry.score+"\n";
-            //console.log(entry);
         });
         this.scoreText.setText(scoresString);
         this.isSubmittedtText.setText("Submitted: "+this.isSubmitted);
