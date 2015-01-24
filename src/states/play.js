@@ -25,7 +25,7 @@ Play.prototype = {
 
         //world setup
         this.game.world.setBounds(0, 0, 2048, 2048); //2000x2000
-        this.land = this.game.add.tileSprite(0, 0, 2000, 2000, 'bg');
+        this.land = this.game.add.tileSprite(0, 0, 2048, 2048, 'bg');
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         //this.land.fixedToCamera = true;
 
@@ -37,16 +37,19 @@ Play.prototype = {
         this.resDisplay.create(this.resStorage);
 
 
-        for(var i = 0; i < 1000; i++){
-            this.drones.push(new Drone(10, 10, this.game));
 
-        }
+        //this.massDroneCreate();
+        this.testDrone = new Drone(50, 50, this.game);
+        this.testDrone2 = new Drone(50, 50, this.game);
+        this.testDrone3 = new Drone(50, 50, this.game);
+        /*this.factorys.push(new Factory(600, 600, this.game, "hub"));
+        this.factorys.push(new Factory(400, 600, this.game, "factory"));
+        this.factorys.push(new Factory(200, 100, this.game, "workshop"));*/
 
-
-
-        this.factorys.push(new Building(600, 600, this.game, "hub"));
-        this.factorys.push(new Building(400, 600, this.game, "factory"));
-        this.factorys.push(new Building(200, 100, this.game, "workshop"));
+        this.testFactory = new Factory(100,100, this.game, "factory");
+        this.testFactory.assignWorker(this.testDrone);
+        this.testFactory.assignWorker(this.testDrone2);
+        this.testFactory.assignWorker(this.testDrone3);
     },
 
 
@@ -57,26 +60,18 @@ Play.prototype = {
         this.resDisplay.update();
 
         var factorys = this.factorys;
-        this.drones.forEach(
-          function(drone){
-              if(drone.status === 'idle'){
-                  var x = Math.floor(Math.random() * 2000);
-                  var y = Math.floor(Math.random() * 2000);
 
-                  drone.move(x,y, function(){
-                      drone.status = 'idle';
-                  });
-                  drone.status = 'moving';
-              }
-              drone.tick();
-
-          }
-        );
+        this.massDroneUpdate();
         this.factorys.forEach(
             function(factory){
                 factory.tick();
             }
         );
+
+        this.testDrone.tick();
+        this.testDrone2.tick();
+        this.testDrone3.tick();
+        this.testFactory.tick();
 
         //Objekte auswählen geht so:
         //getObjectsUnderPointer(pointer, group, callback, callbackContext)
@@ -96,5 +91,30 @@ Play.prototype = {
             this.game.origDragPoint = null;
         }
 
-    }
-}
+    },
+
+    massDroneCreate : function () {
+        for(var i = 0; i < 1000; i++){
+            this.drones.push(new Drone(10, 10, this.game));
+
+        }
+    },
+
+     massDroneUpdate: function () {
+         this.drones.forEach(
+             function(drone){
+                 if(drone.status === 'idle'){
+                     var x = Math.floor(Math.random() * 2000);
+                     var y = Math.floor(Math.random() * 2000);
+
+                     drone.move(x,y, function(){
+                         drone.status = 'idle';
+                     });
+                     drone.status = 'moving';
+                 }
+                 drone.tick();
+
+             }
+         );
+     }
+};
