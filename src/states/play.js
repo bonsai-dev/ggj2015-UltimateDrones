@@ -45,6 +45,10 @@ Play.prototype = {
         this.testDrone = new Drone(50, 50, this.game);
         this.testDrone2 = new Drone(50, 50, this.game);
         this.testDrone3 = new Drone(50, 50, this.game);
+
+        this.loadTestDrone = new Drone(100, 400, this.game);
+        this.loadTestDrone.energy = 25;
+
         /*this.factorys.push(new Factory(600, 600, this.game, "hub"));
         this.factorys.push(new Factory(400, 600, this.game, "factory"));
         this.factorys.push(new Factory(200, 100, this.game, "workshop"));*/
@@ -53,6 +57,9 @@ Play.prototype = {
         this.testFactory.assignWorker(this.testDrone);
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
+
+        this.testHub = new Hub(600, 400, this.game, 'hub');
+        this.testHub.assignWorker(this.loadTestDrone);
     },
 
 
@@ -75,6 +82,9 @@ Play.prototype = {
         this.testDrone2.tick();
         this.testDrone3.tick();
         this.testFactory.tick();
+        this.testHub.tick();
+        this.loadTestDrone.tick();
+
 
         //Objekte auswählen geht so:
         //getObjectsUnderPointer(pointer, group, callback, callbackContext)

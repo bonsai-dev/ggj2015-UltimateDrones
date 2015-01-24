@@ -35,15 +35,21 @@ Hub.prototype =
         worker.assignTask({
             type:"reloadFromHub",
             position: {x:this.sprite.x, y:this.sprite.y},
-            slot:
-            delivery: this.acceptResources()
+            slot: null,
+            energySource: this.giveEnergy()
         });
     },
 
-    acceptResources: function() {
+    giveEnergy: function() {
         var that = this;
-        return function (resources) {
-            that.storage += resources;
+        return function (acceptEnergy) {
+            console.log("accessing energy source");
+            if(that.storedEnergy >= 1) {
+                that.storedEnergy -= 1;
+                acceptEnergy(1);
+            } else {
+                acceptEnergy(0);
+            }
         }
     }
 

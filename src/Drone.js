@@ -20,6 +20,7 @@ function Drone(x, y, game){
     this.sprite.body.immovable = true;
     this.moveSpeed = 0.15;
     this.collectSpeed = 1;
+    this.reloadSpeed = 1;
     this.tween = this.game.add.tween(this.sprite);
     this.task = null;
 }
@@ -42,7 +43,7 @@ Drone.prototype = {
       if(this.task !== null) {
           if(this.task.type === "collectResource") {
               if(this.status === 'idle') {
-                  console.log("assigning move task");
+                  //console.log("assigning move task");
 
                   var moveX = 0;
                   var moveY = 0;
@@ -74,17 +75,14 @@ Drone.prototype = {
                                       }, this);
 
                                       that.energy -= 1;
-                                      that.energyText.setText('Energy: ' + that.energy);
+                                      that.energyText.setText('Energy: ' + that.energy + "%");
 
                                       that.inventory += 0.5;
-                                      console.log("collecting", that.inventory);
-                                      console.log("returning to idle");
+                                      //console.log("collecting", that.inventory);
+                                      //console.log("returning to idle");
                                       that.status = 'idle';
 
                                   }, this);
-
-
-
 
                               } else {
                                   console.log("inventory full, delivering");
@@ -92,7 +90,7 @@ Drone.prototype = {
                                       that.inventory = that.maxInventory;
                                       that.task.delivery(that.inventory);
                                       that.inventory = 0;
-                                      console.log("returning to idle");
+                                      //console.log("returning to idle");
                                       that.status = 'idle';
                                   });
                               }
@@ -104,7 +102,33 @@ Drone.prototype = {
                   this.status = 'moving';
               }
 
-          } else {
+          } else if(this.task.type === "reloadFromHub") {
+              if(this.status === 'idle') {
+                  console.log("set status to loading");
+                  this.status = 'isLoading';
+                  var acceptEnergy = function (that) {
+                      return function (transferredEnergy) {
+                          that.game.time.events.add(Phaser.Timer.SECOND * that.reloadSpeed, function () {
+                              that.energy += transferredEnergy;
+                              that.energyText.setText('Energy: ' + that.energy + "%");
+                              var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
+                                  font: '25px Arial',
+                                  fill: '#3333ff',
+                                  align: 'left'
+                              });
+                              var moveUp = that.game.add.tween(plusOne).to({y: that.sprite.y - 50}, 1000, Phaser.Easing.Linear.None, true);
+                              var fade = that.game.add.tween(plusOne).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+                              fade.onComplete.add(function () {
+                                  plusOne, moveUp, fade = null;
+                              }, this);
+                              console.log("return from load to idle");
+                              that.status = 'idle';
+                          });
+                      }
+                  }(this);
+                  this.task.energySource(acceptEnergy);
+              }
+          } else  {
               this.task();
           }
       }
