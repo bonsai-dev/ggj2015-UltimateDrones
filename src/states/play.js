@@ -64,16 +64,17 @@ Play.prototype = {
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
 
+
+       
+
+        this.testHub = new Hub(1000, 300, this.game);
+        //this.testHub.assignWorker(this.loadTestDrone);
         this.testDrone.sprite.bringToTop();
 
         this.testDrone2.sprite.bringToTop();
 
         this.testDrone3.sprite.bringToTop();
-       
-
-        this.testHub = new Hub(1000, 300, this.game);
-        //this.testHub.assignWorker(this.loadTestDrone);
-
+        this.loadTestDrone.sprite.bringToTop();
         this.unitDisplay = new UnitDisplay(100,100,game); //Unit Display soll über allem sein
     },
 
