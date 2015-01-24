@@ -12,7 +12,7 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
         {
             console.log("Assign Drone to Factory")
             parent.assignWorker(game.state.getCurrentState().selectedUnit);
-            game.state.getCurrentState().state.getCurrentState().setSelectedUnit(null);
+            game.state.getCurrentState().setSelectedUnit(null);
             return;
         }
         if(game.state.getCurrentState().selectedUnit == null)
