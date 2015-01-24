@@ -7,7 +7,7 @@ function Play(){
 
 Play.prototype = {
     preload: function(){
-        this.game.load.image('bg', 'assets/tile.jpg');
+        this.game.load.image('bg', 'assets/bg.png');
         this.game.load.image('spacer', 'assets/spacer.jpg');
     },
 
