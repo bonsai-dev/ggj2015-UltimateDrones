@@ -9,7 +9,7 @@ function Drone(x, y, game){
     this.energy = 100;
     this.health = 100;
 
-    this.energyText = game.add.text(x, y+ 60, this.energy, this.textStyle);
+    this.energyText = game.add.text(x, y+ 60, this.energy+"%", this.textStyle);
 
     this.game = game;
     this.sprite = game.add.sprite(x,y, 'spacer');
@@ -75,7 +75,7 @@ Drone.prototype = {
                                       }, this);
 
                                       that.energy -= 1;
-                                      that.energyText.setText('Energy: ' + that.energy + "%");
+                                      that.energyText.setText(that.energy + "%");
 
                                       that.inventory += 0.5;
                                       //console.log("collecting", that.inventory);
@@ -110,7 +110,7 @@ Drone.prototype = {
                       return function (transferredEnergy) {
                           that.game.time.events.add(Phaser.Timer.SECOND * that.reloadSpeed, function () {
                               that.energy += transferredEnergy;
-                              that.energyText.setText('Energy: ' + that.energy + "%");
+                              that.energyText.setText(that.energy + "%");
                               var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
                                   font: '25px Arial',
                                   fill: '#3333ff',

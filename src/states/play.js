@@ -20,6 +20,8 @@ Play.prototype = {
         this.game.load.image('workshop', 'assets/workshop.png');
         this.game.load.image('crystal', 'assets/crystal.png');
         this.game.load.image('farm1', 'assets/farm1.png');
+
+        this.game.load.spritesheet('fab1anim', 'assets/fab1anim.png', 128, 128);
     },
 
     create: function(){
@@ -53,7 +55,7 @@ Play.prototype = {
         this.factorys.push(new Factory(400, 600, this.game, "factory"));
         this.factorys.push(new Factory(200, 100, this.game, "workshop"));*/
 
-        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1");
+        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1anim");
         this.testFactory.assignWorker(this.testDrone);
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);

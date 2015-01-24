@@ -1,6 +1,8 @@
 function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
     this.game = game;
     this.sprite = this.game.add.sprite(x,y, sprite);
+    this.sprite.animations.add('active');
+    this.sprite.animations.play('active', 6, true);
     this.assignedWorkers = [];
 
     //this.sprite.body.customSeparateX = true;
