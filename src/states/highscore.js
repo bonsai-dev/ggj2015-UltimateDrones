@@ -4,7 +4,7 @@
 'use strict'
 
 function HighScore(){
-    this.url = 'http://localhost:8080/';
+    this.url = 'http://learned-thunder-834.appspot.com/';
     this.scores = null;
     this.textStyle =  {font: '25px Arial', fill: '#ffffff', align: 'left'};
     this.scoreText =  null;

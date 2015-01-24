@@ -3,8 +3,6 @@ from google.appengine.ext import ndb
 import json
 import webapp2
 
-DEFAULT_USER_NAME = 'NO NAME'
-
 class Score(ndb.Model):
     name = ndb. StringProperty(indexed=False)
     score = ndb.IntegerProperty(indexed=True)
@@ -12,7 +10,8 @@ class Score(ndb.Model):
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        name = self.request.get('name', DEFAULT_USER_NAME)
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+        name = self.request.get('name', 'scores')
         score_query = Score.query(ancestor=ndb.Key('Score', 'scores')).order(-Score.score)
         scores = score_query.fetch(10)
 
@@ -27,11 +26,14 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(json.dumps(result))
         self.response.headers['Content-Type'] = 'application/json'
     def put(self):
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
         score = Score(parent=ndb.Key('Score', 'scores'))
-        score.score = int(self.request.get('score'))
-        score.name = self.request.get('name', DEFAULT_USER_NAME)
+        result = json.loads(self.request.body)
+        score.score = result['score']
+        score.name = result['name']
         score.put()
     def post(self):
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
         score = Score(parent=ndb.Key('Score', 'scores'))
         result = json.loads(self.request.body)
         score.score = result['score']
