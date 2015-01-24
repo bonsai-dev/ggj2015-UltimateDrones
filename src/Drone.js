@@ -13,11 +13,16 @@ function Drone(x, y, game){
 
     this.game = game;
     this.sprite = game.add.sprite(x,y, 'dronex1');
-    this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    this.game.physics.arcade.enableBody(this.sprite);
-    this.sprite.body.customSeparateX = true;
-    this.sprite.body.customSeparateY = true;
-    this.sprite.body.immovable = true;
+    this.sprite.inputEnabled = true;
+    //this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    //this.game.physics.arcade.enableBody(this.sprite);
+    //this.sprite.body.customSeparateX = true;
+    //this.sprite.body.customSeparateY = true;
+    //this.sprite.body.immovable = true;
+    var parent = this;
+    this.sprite.events.onInputDown.add(function(sprite, pointer){
+       game.selectedUnit = parent;
+    }, this);
     this.moveSpeed = 0.15;
     this.collectSpeed = 1;
     this.reloadSpeed = 1;
@@ -30,12 +35,12 @@ function Drone(x, y, game){
 
 Drone.prototype = {
   move: function (mX, mY, callback) {
-      var tweenSpeed = Math.sqrt((this.sprite.body.x-mX)*(this.sprite.body.x-mX)+(this.sprite.body.y-mY)*(this.sprite.body.y-mY))/this.moveSpeed;
+      var tweenSpeed = Math.sqrt((this.sprite.x-mX)*(this.sprite.x-mX)+(this.sprite.y-mY)*(this.sprite.y-mY))/this.moveSpeed;
       //console.log(tweenSpeed);
 
       this.tween.stop(false);
       this.game.add.tween(this.energyText).to({x: mX, y: mY + 60}, tweenSpeed, Phaser.Easing.Linear.None, true);
-      this.tween = this.game.add.tween(this.sprite.body).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
+      this.tween = this.game.add.tween(this.sprite).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
       this.tween.onComplete.add(callback, this);
 
   },

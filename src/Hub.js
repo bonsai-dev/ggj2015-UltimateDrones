@@ -1,6 +1,20 @@
-function Hub(x, y, game, sprite){
+function Hub(x, y, game){
     this.game = game;
-    this.sprite = this.game.add.sprite(x,y, sprite);
+
+
+    //sprites
+    this.sprite = this.game.add.sprite(x,y, 'hubBody');
+    this.sprite.scale = new PIXI.Point(2, 2);
+    this.ring = this.game.add.sprite(x,y, 'hubRing', 3);
+    this.ring.scale = new PIXI.Point(2, 2);
+    this.ringOverlay = this.game.add.sprite(x,y, 'hubOver', 3);
+    this.ringOverlay.scale = new PIXI.Point(2, 2);
+
+    //this.ringOverlay.alpha = 0.5;
+    //this.ringOverlay.blendMode = PIXI.blendModes.HUE;
+    game.add.tween(this.ringOverlay).to( { alpha: 0 }, 1000, Phaser.Easing.Quadratic.Out, true, 0, 1000, true);
+
+
     this.assignedWorkers = [];
 
     this.text = this.game.add.text(x, y, this.storage, this.textStyle);
@@ -15,6 +29,21 @@ function Hub(x, y, game, sprite){
         slot3: {x:x, y:y-10, worker: null},
         slot4: {x:x, y:y-20, worker: null}
     };
+
+    this.sprite.inputEnabled = true;
+    var parent = this;
+    this.sprite.events.onInputDown.add(function(sprite, pointer){
+        if(game.selectedUnit instanceof Drone)
+        {
+            console.log("Assign Drone to Hub")
+            parent.assignWorker(game.selectedUnit);
+            game.selectedUnit = null;
+        }
+        if(game.selectedUnit == null)
+        {
+            game.selectedUnit = parent;
+        }
+    }, this);
 
 }
 
@@ -37,7 +66,7 @@ Hub.prototype =
         this.assignedWorkers.push(worker);
         worker.assignTask({
             type:"reloadFromHub",
-            position: {x:this.sprite.x, y:this.sprite.y},
+            position: {},
             slot: null,
             energySource: this.giveEnergy()
         });
