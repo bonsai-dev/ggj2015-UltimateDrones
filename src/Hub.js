@@ -35,7 +35,7 @@ Hub.prototype =
         worker.assignTask({
             type:"reloadFromHub",
             position: {x:this.sprite.x, y:this.sprite.y},
-            slot:
+            slot:'',
             delivery: this.acceptResources()
         });
     },
