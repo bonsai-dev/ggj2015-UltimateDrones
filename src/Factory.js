@@ -12,11 +12,11 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
         {
             console.log("Assign Drone to Factory")
             parent.assignWorker(game.selectedUnit);
-            game.selectedUnit = null;
+            game.state.getCurrentState().setSelectedUnit(null);
         }
         if(game.selectedUnit == null)
         {
-            game.selectedUnit = parent;
+            game.state.getCurrentState().setSelectedUnit(parent);
         }
     }, this);
 
@@ -65,6 +65,16 @@ Factory.prototype =
         return function (resources) {
             that.storage += resources;
         }
+    },
+    getDisplayNames: function()
+    {
+        return [
+            {name: 'Assigned workers', var: 'assignedWorkers', type: 'count'},
+            {name: 'Storage', var: 'storage'},
+            {name: 'Maximum storage', var: 'maximumStorage'},
+            {name: 'Production rate', var: 'productionRate'}
+        ];
     }
+
 
 };

@@ -9,19 +9,19 @@ function Drone(x, y, game){
     this.energy = 100;
     this.health = 100;
 
+    //Very important attributes
+    this.age = chance.age();
+    this.ssn = chance.ssn();
+    this.name = chance.name({prefix: Math.random()<0.5, middle: Math.random()<0.5});
+
     this.energyText = game.add.text(x, y+ 60, this.energy+"%", this.textStyle);
 
     this.game = game;
     this.sprite = game.add.sprite(x,y, 'dronex1');
     this.sprite.inputEnabled = true;
-    //this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    //this.game.physics.arcade.enableBody(this.sprite);
-    //this.sprite.body.customSeparateX = true;
-    //this.sprite.body.customSeparateY = true;
-    //this.sprite.body.immovable = true;
     var parent = this;
     this.sprite.events.onInputDown.add(function(sprite, pointer){
-       game.selectedUnit = parent;
+        game.state.getCurrentState().setSelectedUnit(parent);
     }, this);
     this.moveSpeed = 0.15;
     this.collectSpeed = 1;
@@ -141,8 +141,21 @@ Drone.prototype = {
   },
   assignTask: function (task) {
       this.task = task;
-  }
+  },
+    getDisplayNames: function()
+    {
+        return [
+            {name: 'Name', var: 'name'},
+            {name: 'Age', var: 'age'},
+            {name: 'SSN', var: 'ssn'},
+            {name: 'Energy', var: 'energy'},
+            {name: 'Health', var: 'health'},
+            {name: 'Movespeed', var: 'moveSpeed'},
+            {name: 'Collectspeed', var: 'collectSpeed'},
+            {name: 'Reloadspeed', var: 'reloadSpeed'}
 
+        ];
+    }
 
 };
 
