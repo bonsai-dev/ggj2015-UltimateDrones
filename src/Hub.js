@@ -5,14 +5,15 @@ function Hub(x, y, game){
     //sprites
     this.sprite = this.game.add.sprite(x,y, 'hubBody');
     this.sprite.scale = new PIXI.Point(2, 2);
-    this.ring = this.game.add.sprite(x,y, 'hubRing', 3);
+    this.ring = this.game.add.sprite(x,y, 'hubRing');
     this.ring.scale = new PIXI.Point(2, 2);
-    this.ringOverlay = this.game.add.sprite(x,y, 'hubOver', 3);
+    this.ringOverlay = this.game.add.sprite(x,y, 'hubOver');
     this.ringOverlay.scale = new PIXI.Point(2, 2);
 
     //this.ringOverlay.alpha = 0.5;
     //this.ringOverlay.blendMode = PIXI.blendModes.HUE;
     game.add.tween(this.ringOverlay).to( { alpha: 0 }, 1000, Phaser.Easing.Quadratic.Out, true, 0, 1000, true);
+
 
 
     this.assignedWorkers = [];
@@ -50,6 +51,11 @@ function Hub(x, y, game){
 
 Hub.prototype =
 {
+
+    setRingFrame: function(frame){
+        this.ring.frame = frame;
+        this.ringOverlay.frame = frame;
+    },
 
     tick: function(){
 
