@@ -22,7 +22,7 @@ function Hub(x, y, game){
 
     this.storedEnergy = 0;
     this.maxStoredEnergy = 100;
-    this.energyRegeneration = 0.1;
+    this.energyRegeneration = 0.025;
 
     this.reloadSlots = [
         {x:x+128-32, y:y, worker: null, id:0},
