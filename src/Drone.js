@@ -89,10 +89,15 @@ Drone.prototype = {
                               } else {
                                   console.log("inventory full, delivering");
                                   that.move(that.task.dropOff.x, that.task.dropOff.y, function() {
+                                      console.log(that);
+                                      console.log(that.task);
+                                      that.status = 'idle';
+                                      //Hässlicher fix für den crash
+                                      if(that.task.type != 'collectResource')
+                                        return;
                                       that.inventory = that.maxInventory;
                                       that.task.delivery(that.inventory);
                                       that.inventory = 0;
-                                      that.status = 'idle';
                                   });
                               }
 
