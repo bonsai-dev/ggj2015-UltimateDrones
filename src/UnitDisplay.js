@@ -4,10 +4,17 @@
 function UnitDisplay(x, y, game){
     this.game = game;
     this.rectangle = game.add.graphics(0, 0);
+    this.rectangle.fixedToCamera = true;
     this.textValue = '';
     this.style = { font: "18px Arial", fill: "#ff0044", align: "left" };
-    this.textObject = this.game.add.text(x, y, this.textValue, this.style);
+    this.textObject = this.game.add.text(0, 0, this.textValue, this.style);
+    this.textObject.fixedToCamera = true;
     this.unit = null;
+    this.closeButton = game.add.button(0, 0, 'crystal', this.closeButtonClicked, this);
+    this.closeButton.fixedToCamera = true;
+    this.closeButton.cameraOffset.x = 15;
+    this.closeButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
+    this.closeButton.tint = 0x555555;
 }
 
 UnitDisplay.prototype =
@@ -32,9 +39,9 @@ UnitDisplay.prototype =
             }
         );
         this.textObject.setText(text);
-        this.textObject.x = this.rectangle.x = this.unit.sprite.x+this.unit.sprite.width;
-        this.textObject.y = this.rectangle.y = this.unit.sprite.y-20; //this.unit.sprite.height
-
+console.log(this.game.camera.height);
+        this.textObject.cameraOffset.x = this.rectangle.cameraOffset.x = 20;
+        this.textObject.cameraOffset.y = this.rectangle.cameraOffset.y = this.game.camera.height-this.rectangle.height-50;
     },
     setUnit: function(unit)
     {
@@ -58,14 +65,14 @@ UnitDisplay.prototype =
             }
         );
         this.textObject.setText(text);
-        this.textObject.x = this.unit.sprite.x+this.unit.sprite.width;
-        this.textObject.y = this.unit.sprite.y-20; //this.unit.sprite.height
-
-
-        //this.rectangle = game.add.graphics(0, 0);
         this.rectangle.lineStyle(2, 0x000000, 1);
         this.rectangle.beginFill(0xffffff, 1);
         this.rectangle.drawRoundedRect( -5,  -5, this.textObject.width+10, this.textObject.height+10,10);
-        this.rectangle.alpha = 0x77;
+        this.closeButton.tint = 0xffffff;
+    },
+    closeButtonClicked: function()
+    {
+        this.game.state.getCurrentState().setSelectedUnit(null);
+        this.closeButton.tint = 0x555555;
     }
 };
