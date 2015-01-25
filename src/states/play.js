@@ -70,7 +70,8 @@ Play.prototype = {
 
         this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,200, this.game, "fab2", 'farm3');
         this.MetalFactory = new Factory(800, 1200, 1200, 1200 ,256, this.game, "fab3", 'farm2');
-       
+
+        this.FirePower = new FirePowerFactory(1800, 100, 1700, 200 ,200, this.game, "fab2", 'farm3');
 
         this.testHub = new Hub(1000, 300, this.game);
         this.testDrone.sprite.bringToTop();
