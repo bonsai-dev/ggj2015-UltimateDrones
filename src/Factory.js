@@ -1,4 +1,4 @@
-function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
+function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite, farmSprite){
     this.game = game;
     this.sprite = this.game.add.sprite(x,y, sprite);
     this.sprite.animations.add('active');
@@ -34,7 +34,7 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
         y1: yFarm,
         y2: yFarm+sizeFarm
     }
-    this.farmImage = this.game.add.tileSprite(this.farmCoords.x1, this.farmCoords.y1, sizeFarm, sizeFarm, 'farm1');
+    this.farmImage = this.game.add.tileSprite(this.farmCoords.x1, this.farmCoords.y1, sizeFarm, sizeFarm, farmSprite);
     this.upgradePrice = {resource1: 0,resource2: 100, resource3: 0};
 
 }

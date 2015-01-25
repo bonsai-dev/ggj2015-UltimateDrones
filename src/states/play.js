@@ -3,32 +3,29 @@
 function Play(){
     this.resDisplay = null;
     this.resStorage = null;
-    this.drones = [];
-    this.factorys = [];
+    this.selectedUnit = null;
 }
 
 Play.prototype = {
     preload: function(){
         this.game.load.image('bg', 'assets/bg.png');
-        this.game.load.image('spacer', 'assets/drone.png');
         this.game.load.image('dronex1', 'assets/dronex1.png');
         this.game.load.image('dronex2', 'assets/dronex2.png');
         this.game.load.image('dronex3', 'assets/dronex3.png');
         this.game.load.image('dronex4', 'assets/dronex4.png');
-
-        this.game.load.image('factory', 'assets/factory.png');
-        this.game.load.image('fab1', 'assets/fab1.png');
-        this.game.load.image('hub', 'assets/hub.png');
-        this.game.load.image('workshop', 'assets/workshop.png');
+        this.game.load.image('dronex5', 'assets/dronex5.png');
         this.game.load.image('crystal', 'assets/crystal.png');
+        this.game.load.image('energy', 'assets/energy.png');
         this.game.load.image('farm1', 'assets/farm1.png');
+        this.game.load.image('farm2', 'assets/field2.png');
 
+        this.game.load.image('up', 'assets/up.png');
+        this.game.load.image('close', 'assets/x.png');
         this.game.load.image('hubBody', 'assets/main.png');
         this.game.load.spritesheet('hubRing', 'assets/ring.png',128,128);
         this.game.load.spritesheet('hubOver', 'assets/ringalpha.png',128, 128);
-
         this.game.load.spritesheet('fab1anim', 'assets/fab1anim.png', 128, 128);
-        this.selectedUnit = null;
+        this.game.load.spritesheet('fab2', 'assets/fab2.png', 128, 128);
     },
 
     create: function(){
@@ -50,8 +47,6 @@ Play.prototype = {
         this.resDisplay.create(this.resStorage);
 
 
-
-        //this.massDroneCreate();
         this.testDrone = new Drone(50, 50, this.game);
         this.testDrone2 = new Drone(50, 50, this.game);
         this.testDrone3 = new Drone(50, 50, this.game);
@@ -59,20 +54,17 @@ Play.prototype = {
         this.loadTestDrone = new Drone(100, 400, this.game);
         this.loadTestDrone.changeEnergy(-75);
 
-        /*this.factorys.push(new Factory(600, 600, this.game, "hub"));
-        this.factorys.push(new Factory(400, 600, this.game, "factory"));
-        this.factorys.push(new Factory(200, 100, this.game, "workshop"));*/
 
-        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1anim");
+        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1anim", 'farm1');
         this.testFactory.assignWorker(this.testDrone);
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
 
+        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,256, this.game, "fab2", 'farm2');
 
        
 
         this.testHub = new Hub(1000, 300, this.game);
-        //this.testHub.assignWorker(this.loadTestDrone);
         this.testDrone.sprite.bringToTop();
 
         this.testDrone2.sprite.bringToTop();
@@ -95,15 +87,6 @@ Play.prototype = {
         this.resStorage.resource1 +=1; //remove
         this.resStorage.resource2 +=2; //remove
         this.resDisplay.update();
-
-        var factorys = this.factorys;
-
-        this.massDroneUpdate();
-        this.factorys.forEach(
-            function(factory){
-                factory.tick();
-            }
-        );
 
         this.testDrone.tick();
         this.testDrone2.tick();
@@ -133,30 +116,6 @@ Play.prototype = {
 
     },
 
-    massDroneCreate : function () {
-        for(var i = 0; i < 1000; i++){
-            this.drones.push(new Drone(10, 10, this.game));
-
-        }
-    },
-
-     massDroneUpdate: function () {
-         this.drones.forEach(
-             function(drone){
-                 if(drone.status === 'idle'){
-                     var x = Math.floor(Math.random() * 2000);
-                     var y = Math.floor(Math.random() * 2000);
-
-                     drone.move(x,y, function(){
-                         drone.status = 'idle';
-                     });
-                     drone.status = 'moving';
-                 }
-                 drone.tick();
-
-             }
-         );
-     },
     setSelectedUnit: function(unit){
         this.selectedUnit = unit;
         this.unitDisplay.setUnit(unit);
