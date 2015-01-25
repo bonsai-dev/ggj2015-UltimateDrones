@@ -10,7 +10,6 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
     this.sprite.events.onInputDown.add(function(sprite, pointer){
         if(game.state.getCurrentState().selectedUnit instanceof Drone)
         {
-            console.log("Assign Drone to Factory")
             parent.assignWorker(game.state.getCurrentState().selectedUnit);
             game.state.getCurrentState().setSelectedUnit(null);
             return;
@@ -36,6 +35,8 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite){
         y2: yFarm+sizeFarm
     }
     this.farmImage = this.game.add.tileSprite(this.farmCoords.x1, this.farmCoords.y1, sizeFarm, sizeFarm, 'farm1');
+    this.upgradePrice = {resource1: 0,resource2: 100, resource3: 0};
+
 }
 
 Factory.prototype =
@@ -81,6 +82,13 @@ Factory.prototype =
             {name: 'Storage', var: 'storage'},
             {name: 'Maximum storage', var: 'maximumStorage'},
             {name: 'Production rate', var: 'productionRate'}
+        ];
+    },
+    getUpgrades: function()
+    {
+        return [
+            {name: 'Maximum storage', var: 'maximumStorage', add: 1},
+            {name: 'Collect speed', var: 'productionRate', add: 0.01},
         ];
     },
     deleteWorkerFromPool: function (worker) {

@@ -36,16 +36,16 @@ function Hub(x, y, game){
     this.sprite.events.onInputDown.add(function(sprite, pointer){
         if(game.state.getCurrentState().selectedUnit instanceof Drone)
         {
-            console.log("Assign Drone to Hub");
             parent.assignWorker(game.state.getCurrentState().selectedUnit);
-            game.state.getCurrentState().selectedUnit = null;
+            game.state.getCurrentState().setSelectedUnit(null);
             return;
         }
         if(game.state.getCurrentState().selectedUnit == null)
         {
-            game.state.getCurrentState().selectedUnit = parent;
+            game.state.getCurrentState().setSelectedUnit(parent);
         }
     }, this);
+    this.upgradePrice = {resource1: 100,resource2: 100, resource3: 0};
 
 }
 
@@ -85,19 +85,15 @@ Hub.prototype =
                 var worker = mWorker;
                 return function() {
                     that.deleteWorkerFromPool(worker);
-                    console.log("worker", worker);
-                    console.log("reloadSlots", that.reloadSlots);
                     that.reloadSlots[worker.task.slot.id].worker = null;
                 }
             }(this, worker)
         });
-        console.log("assigned worker to slot ", this.reloadSlots[freeSlotId]);
     },
 
     giveEnergy: function() {
         var that = this;
         return function (acceptEnergy) {
-            console.log("accessing energy source");
             if(that.storedEnergy >= 1) {
                 that.storedEnergy -= 1;
                 acceptEnergy(1);
@@ -109,7 +105,6 @@ Hub.prototype =
 
     getFreeSlotId: function () {
         for(var i=0; i<this.reloadSlots.length; i++) {
-            console.log(this.reloadSlots, i);
             if(this.reloadSlots[i].worker===null) {
                 return i;
             }
@@ -123,6 +118,13 @@ Hub.prototype =
             {name: 'Storage', var: 'storedEnergy'},
             {name: 'Maximum storage', var: 'maxStoredEnergy'},
             {name: 'Regeneration rate', var: 'energyRegeneration'}
+        ];
+    },
+    getUpgrades: function()
+    {
+        return [
+            {name: 'Maximum Energy', var: 'maxStoredEnergy', add: 1},
+            {name: 'Energy regeneration', var: 'energyRegeneration', add: 0.01},
         ];
     },
     deleteWorkerFromPool: function (worker) {

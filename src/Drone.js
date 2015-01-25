@@ -28,7 +28,7 @@ function Drone(x, y, game){
     this.reloadSpeed = 1;
     this.tween = this.game.add.tween(this.sprite);
     this.task = null;
-
+    this.upgradePrice = {resource1: 100,resource2: 0, resource3: 0};
 }
 
 
@@ -175,8 +175,15 @@ Drone.prototype = {
             {name: 'Reloadspeed', var: 'reloadSpeed'}
 
         ];
+    },
+    getUpgrades: function()
+    {
+        return [
+            {name: 'Movespeed', var: 'moveSpeed', add: 0.1},
+            {name: 'Collectspeed', var: 'collectSpeed', add: 0.1},
+            {name: 'reloadSpeed', var: 'reloadSpeed', add: 0.1},
+        ];
     }
-
 };
 
 function randomBetween(min, max) {
