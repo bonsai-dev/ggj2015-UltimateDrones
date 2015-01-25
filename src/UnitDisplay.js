@@ -28,7 +28,7 @@ function UnitDisplay(x, y, game){
     this.spawnButton.cameraOffset.x = 15 + this.closeButton.width + 15 + this.spawnButton.width + 15;
     this.spawnButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
     this.spawnButton.tint = 0x555555;
-    this.spawnPrice = {resource1: 100,resource2: 100,resource3: 0};
+    this.spawnPrice = {resource1: 1,resource2: 1,resource3: 1};
 
     this.bouncingArrow = null;
     this.bouncingArrowYOffset = 0;
