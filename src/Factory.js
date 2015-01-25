@@ -57,7 +57,14 @@ Factory.prototype =
             type:"collectResource",
             area:this.farmCoords,
             dropOff: {x:this.sprite.x, y:this.sprite.y},
-            delivery: this.acceptResources()
+            delivery: this.acceptResources(),
+            unregister: function (mThis, mWorker) {
+                var that = mThis;
+                var worker = mWorker;
+                return function () {
+                    that.deleteWorkerFromPool(worker);
+                }
+            }(this, worker)
         });
     },
 
@@ -75,6 +82,14 @@ Factory.prototype =
             {name: 'Maximum storage', var: 'maximumStorage'},
             {name: 'Production rate', var: 'productionRate'}
         ];
+    },
+    deleteWorkerFromPool: function (worker) {
+        for(var i=0; i<this.assignedWorkers.length; i++) {
+            if(this.assignedWorkers[i].ssn === worker.ssn) {
+                this.assignedWorkers.splice(i, 1);
+                return;
+            }
+        }
     }
 
 

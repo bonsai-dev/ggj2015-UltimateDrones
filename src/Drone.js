@@ -153,6 +153,13 @@ Drone.prototype = {
       }
   },
   assignTask: function (task) {
+      if(this.task != null) {
+          if(this.task.unregister != null) {
+              this.task.unregister();
+          }
+          this.task = null;
+          this.task = 'idle';
+      }
       this.task = task;
   },
     getDisplayNames: function()

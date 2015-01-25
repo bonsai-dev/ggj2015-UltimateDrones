@@ -25,10 +25,10 @@ function Hub(x, y, game){
     this.energyRegeneration = 0.1;
 
     this.reloadSlots = [
-        {x:x+128-32, y:y, worker: null, id:1},
-        {x:x+256-64, y:y+128-32, worker: null, id:2},
-        {x:x, y:y+128-32, worker: null, id:3},
-        {x:x+128-32, y:y+256-64, worker: null, id:4}
+        {x:x+128-32, y:y, worker: null, id:0},
+        {x:x+256-64, y:y+128-32, worker: null, id:1},
+        {x:x, y:y+128-32, worker: null, id:2},
+        {x:x+128-32, y:y+256-64, worker: null, id:3}
     ];
 
     this.sprite.inputEnabled = true;
@@ -79,7 +79,17 @@ Hub.prototype =
             type:"reloadFromHub",
             position: {},
             slot: this.reloadSlots[freeSlotId],
-            energySource: this.giveEnergy()
+            energySource: this.giveEnergy(),
+            unregister: function (mThis, mWorker) {
+                var that = mThis;
+                var worker = mWorker;
+                return function() {
+                    that.deleteWorkerFromPool(worker);
+                    console.log("worker", worker);
+                    console.log("reloadSlots", that.reloadSlots);
+                    that.reloadSlots[worker.task.slot.id].worker = null;
+                }
+            }(this, worker)
         });
         console.log("assigned worker to slot ", this.reloadSlots[freeSlotId]);
     },
@@ -99,6 +109,7 @@ Hub.prototype =
 
     getFreeSlotId: function () {
         for(var i=0; i<this.reloadSlots.length; i++) {
+            console.log(this.reloadSlots, i);
             if(this.reloadSlots[i].worker===null) {
                 return i;
             }
@@ -113,6 +124,13 @@ Hub.prototype =
             {name: 'Maximum storage', var: 'maxStoredEnergy'},
             {name: 'Regeneration rate', var: 'energyRegeneration'}
         ];
+    },
+    deleteWorkerFromPool: function (worker) {
+        for(var i=0; i<this.assignedWorkers.length; i++) {
+            if(this.assignedWorkers[i].ssn === worker.ssn) {
+                this.assignedWorkers.splice(i, 1);
+            }
+        }
     }
 
 };
