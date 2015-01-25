@@ -28,6 +28,8 @@ Play.prototype = {
         this.game.load.image('up', 'assets/up.png');
         this.game.load.image('close', 'assets/x.png');
 
+        this.game.load.image('arrow', 'assets/pfeil.png');
+
         this.game.load.image('hubBody', 'assets/main.png');
         this.game.load.spritesheet('hubRing', 'assets/ring.png',128,128);
         this.game.load.spritesheet('hubOver', 'assets/ringalpha.png',128, 128);
