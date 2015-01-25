@@ -12,6 +12,9 @@ Play.prototype = {
         this.game.load.image('bg', 'assets/bg.png');
         this.game.load.image('spacer', 'assets/drone.png');
         this.game.load.image('dronex1', 'assets/dronex1.png');
+        this.game.load.image('dronex2', 'assets/dronex2.png');
+        this.game.load.image('dronex3', 'assets/dronex3.png');
+        this.game.load.image('dronex4', 'assets/dronex4.png');
 
         this.game.load.image('factory', 'assets/factory.png');
         this.game.load.image('fab1', 'assets/fab1.png');
@@ -53,7 +56,7 @@ Play.prototype = {
         this.testDrone3 = new Drone(50, 50, this.game);
 
         this.loadTestDrone = new Drone(100, 400, this.game);
-        this.loadTestDrone.energy = 25;
+        this.loadTestDrone.changeEnergy(-75);
 
         /*this.factorys.push(new Factory(600, 600, this.game, "hub"));
         this.factorys.push(new Factory(400, 600, this.game, "factory"));
