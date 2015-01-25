@@ -45,7 +45,7 @@ function Hub(x, y, game){
             game.state.getCurrentState().setSelectedUnit(parent);
         }
     }, this);
-    this.upgradePrice = {resource1: 100,resource2: 100, resource3: 0};
+    this.upgradePrice = {resource1: 1,resource2: 0, resource3: 1};
 
 }
 

@@ -35,7 +35,7 @@ function FirePowerFactory(x, y, xFarm, yFarm, sizeFarm, game, sprite, farmSprite
         y2: yFarm+sizeFarm
     }
     this.farmImage = this.game.add.tileSprite(this.farmCoords.x1, this.farmCoords.y1, sizeFarm, sizeFarm, farmSprite);
-    this.upgradePrice = {resource1: 0,resource2: 100, resource3: 0};
+    this.upgradePrice = {resource1: 0,resource2: 1, resource3: 1};
 
 }
 

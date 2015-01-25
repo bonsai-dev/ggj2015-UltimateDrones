@@ -26,7 +26,7 @@ function Drone(x, y, game){
     this.reloadSpeed = 1;
     this.tween = this.game.add.tween(this.sprite);
     this.task = null;
-    this.upgradePrice = {resource1: 100,resource2: 0, resource3: 0};
+    this.upgradePrice = {resource1: 1,resource2: 0, resource3: 0};
 }
 
 
