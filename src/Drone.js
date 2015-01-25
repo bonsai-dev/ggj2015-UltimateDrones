@@ -168,11 +168,11 @@ Drone.prototype = {
             {name: 'Name', var: 'name'},
             {name: 'Age', var: 'age'},
             {name: 'SSN', var: 'ssn'},
-            {name: 'Energy', var: 'energy'},
-            {name: 'Health', var: 'health'},
-            {name: 'Movespeed', var: 'moveSpeed'},
-            {name: 'Collectspeed', var: 'collectSpeed'},
-            {name: 'Reloadspeed', var: 'reloadSpeed'}
+            {name: 'Energy', var: 'energy', type: 'd'},
+            {name: 'Health', var: 'health', type: 'd'},
+            {name: 'Movespeed', var: 'moveSpeed', type: '2f'},
+            {name: 'Collectspeed', var: 'collectSpeed', type: '2f'},
+            {name: 'Reloadspeed', var: 'reloadSpeed', type: '2f'}
 
         ];
     },

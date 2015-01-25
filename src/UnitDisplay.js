@@ -28,9 +28,26 @@ UnitDisplay.prototype =
 {
     show: function()
     {
-        var parent = this;
+        this.setDisplayText();
+        this.upgradeButton.tint = 0xffffff;
         if(this.unit == null)
             return;
+        if( this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
+            this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 ||
+            this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2
+        )
+        {
+            this.upgradeButton.tint = 0x555555;
+        }
+
+    },
+    setDisplayText: function()
+    {
+        if (this.unit == null) {
+            this.textObject.setText(' ');
+            return;
+        }
+        var parent = this;
         if(!this.unit.__proto__.hasOwnProperty('getDisplayNames'))
             return;
         var varNames = this.unit.getDisplayNames();
@@ -42,10 +59,14 @@ UnitDisplay.prototype =
                 var value = parent.unit[prop.var];
                 if(prop.type == 'count')
                     value = parent.unit[prop.var].length;
-                text+= prop.name + ': ' + value + '\n';
+                if(prop.type == '2f')
+                    value = Math.round(parent.unit[prop.var] * 100) / 100;
+                if(prop.type == 'd')
+                    value = Math.round(parent.unit[prop.var]);
+                text+= prop.name + ': ' + value.toString() + '\n';
             }
         );
-        text+= "Upgrade prices: "
+        text+= "Upgrade prices: " + '\n'
         + Static.Strings.Resources.resource1Name + ": " +  this.unit.upgradePrice.resource1 + '\n'
         + Static.Strings.Resources.resource2Name + ": " +  this.unit.upgradePrice.resource2 + '\n'
         + Static.Strings.Resources.resource3Name + ": " +  this.unit.upgradePrice.resource3 + '\n'
@@ -53,45 +74,15 @@ UnitDisplay.prototype =
         this.textObject.setText(text);
         this.textObject.cameraOffset.x = this.rectangle.cameraOffset.x = 20;
         this.textObject.cameraOffset.y = this.rectangle.cameraOffset.y = this.game.camera.height-this.rectangle.height-50;
-
-        this.upgradeButton.tint = 0xffffff;
-        if( this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 &&
-            this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 &&
-            this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2
-        )
-        {
-            this.upgradeButton.tint = 0x555555;
-        }
-
     },
+
     setUnit: function(unit)
     {
         this.unit = unit;
         this.rectangle.clear();
-
-        var parent = this;
-        if(this.unit == null) {
-            this.textObject.setText('');
+        this.setDisplayText();
+        if(this.unit == null)
             return;
-        }
-        if(!this.unit.__proto__.hasOwnProperty('getDisplayNames'))
-            return;
-        var varNames = this.unit.getDisplayNames();
-        var text = '';
-        varNames.forEach(
-            function(prop){
-                if(!parent.unit.hasOwnProperty(prop.var))
-                    return;
-                text+= prop.name + ': ' + parent.unit[prop.var] + '\n';
-            }
-        );
-        text+= "Upgrade prices: "
-        + Static.Strings.Resources.resource1Name + ": " +  this.unit.upgradePrice.resource1 + '\n'
-        + Static.Strings.Resources.resource2Name + ": " +  this.unit.upgradePrice.resource2 + '\n'
-        + Static.Strings.Resources.resource3Name + ": " +  this.unit.upgradePrice.resource3 + '\n'
-        ;
-
-        this.textObject.setText(text);
         this.rectangle.lineStyle(2, 0x000000, 1);
         this.rectangle.beginFill(0xffffff, 1);
         this.rectangle.drawRoundedRect( -5,  -5, this.textObject.width+10, this.textObject.height+10,10);
@@ -111,8 +102,8 @@ UnitDisplay.prototype =
         if (!this.unit.__proto__.hasOwnProperty('getUpgrades'))
             return;
 
-        if( this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 &&
-            this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 &&
+        if( this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
+            this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 ||
             this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2
         )
         {
