@@ -4,6 +4,7 @@ function Play(){
     this.resDisplay = null;
     this.resStorage = null;
     this.selectedUnit = null;
+    this.workerArray= [];
 }
 
 Play.prototype = {
@@ -18,6 +19,9 @@ Play.prototype = {
         this.game.load.image('energy', 'assets/energy.png');
         this.game.load.image('farm1', 'assets/farm1.png');
         this.game.load.image('farm2', 'assets/field2.png');
+
+        this.game.load.spritesheet('fab3', 'assets/fab3.png', 128, 128);
+        this.game.load.image('farm3', 'assets/field3.png');
 
         this.game.load.image('up', 'assets/up.png');
         this.game.load.image('close', 'assets/x.png');
@@ -63,17 +67,21 @@ Play.prototype = {
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
 
-        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,256, this.game, "fab2", 'farm2');
-
+        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,200, this.game, "fab2", 'farm3');
+        this.MetalFactory = new Factory(800, 1200, 1200, 1200 ,256, this.game, "fab3", 'farm2');
        
 
         this.testHub = new Hub(1000, 300, this.game);
         this.testDrone.sprite.bringToTop();
-
         this.testDrone2.sprite.bringToTop();
-
         this.testDrone3.sprite.bringToTop();
         this.loadTestDrone.sprite.bringToTop();
+
+        this.workerArray.push(this.testDrone);
+        this.workerArray.push(this.testDrone2);
+        this.workerArray.push(this.testDrone3);
+        this.workerArray.push(this.loadTestDrone);
+
         this.humansKilledText = this.game.add.text(0, 0, '', { font: "20px Arial", fill: "#ff0044", align: "left" });
         this.humansKilledText.fixedToCamera = true;
         this.unitDisplay = new UnitDisplay(100,100,game); //Unit Display soll über allem sein
@@ -91,10 +99,12 @@ Play.prototype = {
         this.resStorage.resource2 +=2; //remove
         this.resDisplay.update();
 
-        this.testDrone.tick();
-        this.testDrone2.tick();
-        this.testDrone3.tick();
         this.testFactory.tick();
+
+        for(var key in this.workerArray)
+        {
+            this.workerArray[key].tick();
+        }
         this.testHub.tick();
         this.loadTestDrone.tick();
         this.unitDisplay.show();
@@ -122,5 +132,11 @@ Play.prototype = {
     setSelectedUnit: function(unit){
         this.selectedUnit = unit;
         this.unitDisplay.setUnit(unit);
+    },
+
+    spawnNewDrone: function(){
+        var newDrone = new Drone(50, 50, this.game);
+        newDrone.sprite.bringToTop();
+        this.workerArray.push(newDrone);
     }
 };
