@@ -15,13 +15,18 @@ Play.prototype = {
         this.game.load.image('dronex2', 'assets/dronex2.png');
         this.game.load.image('dronex3', 'assets/dronex3.png');
         this.game.load.image('dronex4', 'assets/dronex4.png');
+        this.game.load.image('dronex5', 'assets/dronex5.png');
 
         this.game.load.image('factory', 'assets/factory.png');
         this.game.load.image('fab1', 'assets/fab1.png');
         this.game.load.image('hub', 'assets/hub.png');
         this.game.load.image('workshop', 'assets/workshop.png');
         this.game.load.image('crystal', 'assets/crystal.png');
+        this.game.load.image('energy', 'assets/energy.png');
         this.game.load.image('farm1', 'assets/farm1.png');
+
+        this.game.load.image('up', 'assets/up.png');
+        this.game.load.image('close', 'assets/x.png');
 
         this.game.load.image('hubBody', 'assets/main.png');
         this.game.load.spritesheet('hubRing', 'assets/ring.png',128,128);
