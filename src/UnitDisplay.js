@@ -33,20 +33,20 @@ UnitDisplay.prototype =
     show: function()
     {
         this.setDisplayText();
-        this.upgradeButton.tint = 0xffffff;
+        this.upgradeButton.tint = 0x555555;
         if(this.unit == null) {
-            if(this.bouncingArrow != null) {
+            if (this.bouncingArrow != null) {
                 this.bouncingArrow.kill();
                 this.bouncingArrow = null;
             }
             return;
         }
-        if( this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
+        if(!(this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
             this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 ||
             this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2
-        )
+        ))
         {
-            this.upgradeButton.tint = 0x555555;
+            this.upgradeButton.tint = 0xffffff;
         }
 
         //bouncy arrow
