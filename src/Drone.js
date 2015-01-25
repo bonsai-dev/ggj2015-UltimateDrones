@@ -89,8 +89,6 @@ Drone.prototype = {
                               } else {
                                   console.log("inventory full, delivering");
                                   that.move(that.task.dropOff.x, that.task.dropOff.y, function() {
-                                      console.log(that);
-                                      console.log(that.task);
                                       that.status = 'idle';
                                       //Hässlicher fix für den crash
                                       if(that.task.type != 'collectResource')
