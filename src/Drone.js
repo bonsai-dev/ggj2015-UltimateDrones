@@ -67,6 +67,10 @@ Drone.prototype = {
                       moveY,
                       function (that) {
                           var closuredTask = function() {
+                              if(that.task.type != 'collectResource') {
+                                  that.status = 'idle';
+                                  return;
+                              }
                               if(that.inventory < that.maxInventory) {
 
                                   that.game.time.events.add(Phaser.Timer.SECOND * that.collectSpeed, function(){
