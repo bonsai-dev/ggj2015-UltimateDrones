@@ -36,7 +36,7 @@ function Hub(x, y, game){
     this.sprite.events.onInputDown.add(function(sprite, pointer){
         if(game.state.getCurrentState().selectedUnit instanceof Drone)
         {
-            console.log("Assign Drone to Hub")
+            console.log("Assign Drone to Hub");
             parent.assignWorker(game.state.getCurrentState().selectedUnit);
             game.state.getCurrentState().selectedUnit = null;
             return;

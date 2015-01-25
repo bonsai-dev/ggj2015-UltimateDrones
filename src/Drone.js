@@ -36,7 +36,6 @@ function Drone(x, y, game){
 Drone.prototype = {
   move: function (mX, mY, callback) {
       var tweenSpeed = Math.sqrt((this.sprite.x-mX)*(this.sprite.x-mX)+(this.sprite.y-mY)*(this.sprite.y-mY))/this.moveSpeed;
-      //console.log(tweenSpeed);
 
       this.tween.stop(false);
       this.game.add.tween(this.energyText).to({x: mX, y: mY + 60}, tweenSpeed, Phaser.Easing.Linear.None, true);
@@ -49,7 +48,6 @@ Drone.prototype = {
       if(this.task !== null) {
           if(this.task.type === "collectResource") {
               if(this.status === 'idle') {
-                  //console.log("assigning move task");
 
                   var moveX = 0;
                   var moveY = 0;
@@ -84,8 +82,6 @@ Drone.prototype = {
                                       that.energyText.setText(that.energy + "%");
 
                                       that.inventory += 0.5;
-                                      //console.log("collecting", that.inventory);
-                                      //console.log("returning to idle");
                                       that.status = 'idle';
 
                                   }, this);
@@ -96,7 +92,6 @@ Drone.prototype = {
                                       that.inventory = that.maxInventory;
                                       that.task.delivery(that.inventory);
                                       that.inventory = 0;
-                                      //console.log("returning to idle");
                                       that.status = 'idle';
                                   });
                               }
@@ -110,41 +105,47 @@ Drone.prototype = {
 
           } else if(this.task.type === "reloadFromHub") {
               if(this.status === 'idle') {
+                  if(Math.abs(this.task.slot.x-this.sprite.x) < 5 && Math.abs(this.task.slot.y-this.sprite.y)<5) {
+                      this.status = 'atLoading';
+                      return;
+                  }
                   this.move(
                       this.task.slot.x,
                       this.task.slot.y,
                       function (that) {
                           var closuredTask = function() {
-                              that.status = 'loading';
-                              console.log("arrived at loading slot!");
+                              that.status = 'atLoading';
+                              //console.log("arrived at loading slot!");
                           };
                           return closuredTask;
                       }(this)
                   );
                   this.status = 'moving';
-                  /*console.log("set status to loading");
-                  this.status = 'isLoading';
+              } else if(this.status === 'atLoading') {
                   var acceptEnergy = function (that) {
                       return function (transferredEnergy) {
                           that.game.time.events.add(Phaser.Timer.SECOND * that.reloadSpeed, function () {
-                              that.energy += transferredEnergy;
-                              that.energyText.setText(that.energy + "%");
-                              var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
-                                  font: '25px Arial',
-                                  fill: '#3333ff',
-                                  align: 'left'
-                              });
-                              var moveUp = that.game.add.tween(plusOne).to({y: that.sprite.y - 50}, 1000, Phaser.Easing.Linear.None, true);
-                              var fade = that.game.add.tween(plusOne).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
-                              fade.onComplete.add(function () {
-                                  plusOne, moveUp, fade = null;
-                              }, this);
-                              console.log("return from load to idle");
-                              that.status = 'idle';
-                          });
-                      }
+                          that.energy += transferredEnergy;
+                          that.energyText.setText(that.energy + "%");
+                          var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
+                            font: '25px Arial',
+                            fill: '#3333ff',
+                            align: 'left'
+                      });
+                      var moveUp = that.game.add.tween(plusOne).to({y: that.sprite.y - 50}, 1000, Phaser.Easing.Linear.None, true);
+                      var fade = that.game.add.tween(plusOne).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+                      fade.onComplete.add(function () {
+                          plusOne = undefined;
+                          moveUp = undefined;
+                          fade = undefined;
+                      }, this);
+
+                      that.status = 'idle';
+                      });
+                  }
                   }(this);
-                  this.task.energySource(acceptEnergy);*/
+                  this.task.energySource(acceptEnergy);
+                  this.status = 'isLoading'
               }
           } else  {
               this.task();
