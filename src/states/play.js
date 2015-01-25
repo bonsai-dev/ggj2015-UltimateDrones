@@ -25,6 +25,7 @@ Play.prototype = {
 
         this.game.load.image('up', 'assets/up.png');
         this.game.load.image('close', 'assets/x.png');
+        this.game.load.image('spawn', 'assets/spawn.png');
 
         this.game.load.image('arrow', 'assets/pfeil.png');
 

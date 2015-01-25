@@ -23,7 +23,7 @@ function UnitDisplay(x, y, game){
     this.upgradeButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
     this.upgradeButton.tint = 0x555555;
 
-    this.spawnButton = game.add.button(0, 0, 'up', this.spawnButtonClicked, this);
+    this.spawnButton = game.add.button(0, 0, 'spawn', this.spawnButtonClicked, this);
     this.spawnButton.fixedToCamera = true;
     this.spawnButton.cameraOffset.x = 15 + this.closeButton.width + 15 + this.spawnButton.width + 15;
     this.spawnButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
