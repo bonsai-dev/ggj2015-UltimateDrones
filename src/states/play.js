@@ -34,6 +34,7 @@ Play.prototype = {
         this.game.load.spritesheet('hubOver', 'assets/ringalpha.png',128, 128);
         this.game.load.spritesheet('fab1anim', 'assets/fab1anim.png', 128, 128);
         this.game.load.spritesheet('fab2', 'assets/fab2.png', 128, 128);
+        this.game.load.spritesheet('fab4', 'assets/fab4.png',128,128);
     },
 
     create: function(){
@@ -71,7 +72,7 @@ Play.prototype = {
         this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,200, this.game, "fab2", 'farm3');
         this.MetalFactory = new Factory(800, 1200, 1200, 1200 ,256, this.game, "fab3", 'farm2');
 
-        this.FirePower = new FirePowerFactory(1800, 100, 1700, 200 ,200, this.game, "fab2", 'farm3');
+        this.FirePower = new FirePowerFactory(1800, 100, 1700, 200 ,200, this.game, "fab4", 'farm2');
 
         this.testHub = new Hub(1000, 300, this.game);
         this.testDrone.sprite.bringToTop();
@@ -102,6 +103,7 @@ Play.prototype = {
         this.resDisplay.update();
 
         this.testFactory.tick();
+        this.FirePower.tick();
 
         for(var key in this.workerArray)
         {

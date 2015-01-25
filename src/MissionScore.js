@@ -6,7 +6,7 @@ function MissionScore(game){
     this.game = game;
     this.humansKilled = 0;
     this.timer = null;
-    this.gameTime = 180*1000; //milliseconds
+    this.gameTime = 300*1000; //milliseconds
     this.multiplicator = 1;
 }
 
