@@ -22,6 +22,13 @@ function UnitDisplay(x, y, game){
     this.upgradeButton.cameraOffset.x = 15 + this.closeButton.width + 15 ;
     this.upgradeButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
     this.upgradeButton.tint = 0x555555;
+
+    this.spawnButton = game.add.button(0, 0, 'up', this.spawnButtonClicked, this);
+    this.spawnButton.fixedToCamera = true;
+    this.spawnButton.cameraOffset.x = 15 + this.closeButton.width + 15 + this.spawnButton.width + 15;
+    this.spawnButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
+    this.spawnButton.tint = 0x555555;
+    this.spawnPrice = {resource1: 100,resource2: 100,resource3: 0};
 }
 
 UnitDisplay.prototype =
@@ -30,6 +37,13 @@ UnitDisplay.prototype =
     {
         this.setDisplayText();
         this.upgradeButton.tint = 0x555555;
+        this.spawnButton.tint = 0x555555;
+        if (!(this.spawnPrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
+            this.spawnPrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 ||
+            this.spawnPrice.resource2 > this.game.state.getCurrentState().resStorage.resource2)
+        ) {
+            this.spawnButton.tint = 0xffffff;
+        }
         if(this.unit == null)
             return;
         if(!(this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
@@ -82,14 +96,12 @@ UnitDisplay.prototype =
         this.rectangle.clear();
         this.setDisplayText();
         this.closeButton.tint = 0x555555;
-        this.upgradeButton.tint = 0x555555
         if(this.unit == null)
             return;
         this.rectangle.lineStyle(2, 0x000000, 1);
         this.rectangle.beginFill(0xffffff, 1);
         this.rectangle.drawRoundedRect( -5,  -5, this.textObject.width+10, this.textObject.height+10,10);
         this.closeButton.tint = 0xffffff;
-        this.upgradeButton.tint = 0xffffff;
     },
     closeButtonClicked: function()
     {
@@ -128,5 +140,24 @@ UnitDisplay.prototype =
         this.unit.upgradePrice.resource2*=2;
         this.unit.upgradePrice.resource3*=2;
 
+    },
+    spawnButtonClicked: function() {
+        var parent = this;
+        if (this.spawnPrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
+            this.spawnPrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 ||
+            this.spawnPrice.resource2 > this.game.state.getCurrentState().resStorage.resource2
+        ) {
+            //Upgrade zu teuer
+            return;
+        }
+        this.game.state.getCurrentState().resStorage.resource1 -= this.spawnPrice.resource1;
+        this.spawnPrice.resource1 *=2;
+        this.game.state.getCurrentState().resStorage.resource2 -= this.spawnPrice.resource2;
+        this.spawnPrice.resource2 *=2;
+        this.game.state.getCurrentState().resStorage.resource3 -= this.spawnPrice.resource3;
+        this.spawnPrice.resource3 *=2;
+        var drone = new Drone(50, 50, this.game);
+        drone.sprite.bringToTop();
+        this.game.state.getCurrentState().workerArray.push(drone);
     }
 };

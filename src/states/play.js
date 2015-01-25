@@ -4,6 +4,7 @@ function Play(){
     this.resDisplay = null;
     this.resStorage = null;
     this.selectedUnit = null;
+    this.workerArray= [];
 }
 
 Play.prototype = {
@@ -66,11 +67,15 @@ Play.prototype = {
 
         this.testHub = new Hub(1000, 300, this.game);
         this.testDrone.sprite.bringToTop();
-
         this.testDrone2.sprite.bringToTop();
-
         this.testDrone3.sprite.bringToTop();
         this.loadTestDrone.sprite.bringToTop();
+
+        this.workerArray.push(this.testDrone);
+        this.workerArray.push(this.testDrone2);
+        this.workerArray.push(this.testDrone3);
+        this.workerArray.push(this.loadTestDrone);
+
         this.humansKilledText = this.game.add.text(0, 0, '', { font: "20px Arial", fill: "#ff0044", align: "left" });
         this.humansKilledText.fixedToCamera = true;
         this.unitDisplay = new UnitDisplay(100,100,game); //Unit Display soll über allem sein
@@ -88,10 +93,12 @@ Play.prototype = {
         this.resStorage.resource2 +=2; //remove
         this.resDisplay.update();
 
-        this.testDrone.tick();
-        this.testDrone2.tick();
-        this.testDrone3.tick();
         this.testFactory.tick();
+
+        for(var key in this.workerArray)
+        {
+            this.workerArray[key].tick();
+        }
         this.testHub.tick();
         this.loadTestDrone.tick();
         this.unitDisplay.show();
