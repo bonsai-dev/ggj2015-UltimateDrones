@@ -125,23 +125,25 @@ Drone.prototype = {
                   var acceptEnergy = function (that) {
                       return function (transferredEnergy) {
                           that.game.time.events.add(Phaser.Timer.SECOND * that.reloadSpeed, function () {
-                          that.changeEnergy(transferredEnergy);
-                          var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
-                            font: '25px Arial',
-                            fill: '#3333ff',
-                            align: 'left'
-                      });
-                      var moveUp = that.game.add.tween(plusOne).to({y: that.sprite.y - 50}, 1000, Phaser.Easing.Linear.None, true);
-                      var fade = that.game.add.tween(plusOne).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
-                      fade.onComplete.add(function () {
-                          plusOne = undefined;
-                          moveUp = undefined;
-                          fade = undefined;
-                      }, this);
+                              if(transferredEnergy > 0) {
+                                  that.changeEnergy(transferredEnergy);
+                                  var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
+                                      font: '25px Arial',
+                                      fill: '#3333ff',
+                                      align: 'left'
+                                  });
+                                  var moveUp = that.game.add.tween(plusOne).to({y: that.sprite.y - 50}, 1000, Phaser.Easing.Linear.None, true);
+                                  var fade = that.game.add.tween(plusOne).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+                                  fade.onComplete.add(function () {
+                                      plusOne = undefined;
+                                      moveUp = undefined;
+                                      fade = undefined;
+                                  }, this);
+                              }
 
-                      that.status = 'idle';
-                      });
-                  }
+                              that.status = 'idle';
+                          });
+                      }
                   }(this);
                   this.task.energySource(acceptEnergy);
                   this.status = 'isLoading'
