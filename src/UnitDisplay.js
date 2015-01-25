@@ -39,7 +39,6 @@ UnitDisplay.prototype =
             }
         );
         this.textObject.setText(text);
-console.log(this.game.camera.height);
         this.textObject.cameraOffset.x = this.rectangle.cameraOffset.x = 20;
         this.textObject.cameraOffset.y = this.rectangle.cameraOffset.y = this.game.camera.height-this.rectangle.height-50;
     },
