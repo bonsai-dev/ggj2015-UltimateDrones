@@ -24,6 +24,9 @@ Play.prototype = {
 
         this.game.load.image('up', 'assets/up.png');
         this.game.load.image('close', 'assets/x.png');
+
+        this.game.load.image('arrow', 'assets/pfeil.png');
+
         this.game.load.image('hubBody', 'assets/main.png');
         this.game.load.spritesheet('hubRing', 'assets/ring.png',128,128);
         this.game.load.spritesheet('hubOver', 'assets/ringalpha.png',128, 128);
@@ -34,6 +37,7 @@ Play.prototype = {
     create: function(){
         this.resDisplay = new ResourceDisplay(game);
         this.resStorage = new ResourceStorage();
+        game.missionScore.reset();
 
         //world setup
         this.game.world.setBounds(0, 0, 2048, 2048); //2000x2000
@@ -82,7 +86,8 @@ Play.prototype = {
     update: function(){
         var game = this.game;
         game.missionScore.tick();
-        this.humansKilledText.setText('Humans killed: '+Math.round(game.missionScore.humansKilled));
+        this.humansKilledText.setText('Humans killed: '+Math.round(game.missionScore.humansKilled)
+        +'\nTime left:'+(Math.round((game.missionScore.gameTime/1000 - game.missionScore.timer.ms/1000)).toString()+' seconds'));
         this.humansKilledText.cameraOffset.x = this.game.camera.width - this.humansKilledText.width;
         this.humansKilledText.cameraOffset.y = 8;
         this.resStorage.resource1 +=1; //remove

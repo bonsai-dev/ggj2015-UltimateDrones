@@ -22,6 +22,10 @@ function UnitDisplay(x, y, game){
     this.upgradeButton.cameraOffset.x = 15 + this.closeButton.width + 15 ;
     this.upgradeButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
     this.upgradeButton.tint = 0x555555;
+
+    this.bouncingArrow = null;
+    this.bouncingArrowYOffset = 0;
+    this.game.add.tween(this).to({bouncingArrowYOffset: 25}, 1000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
 }
 
 UnitDisplay.prototype =
@@ -29,16 +33,31 @@ UnitDisplay.prototype =
     show: function()
     {
         this.setDisplayText();
-        this.upgradeButton.tint = 0xffffff;
-        if(this.unit == null)
+        this.upgradeButton.tint = 0x555555;
+        if(this.unit == null) {
+            if (this.bouncingArrow != null) {
+                this.bouncingArrow.kill();
+                this.bouncingArrow = null;
+            }
             return;
-        if( this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
+        }
+        if(!(this.unit.upgradePrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
             this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 ||
             this.unit.upgradePrice.resource2 > this.game.state.getCurrentState().resStorage.resource2
-        )
+        ))
         {
-            this.upgradeButton.tint = 0x555555;
+            this.upgradeButton.tint = 0xffffff;
         }
+
+        //bouncy arrow
+        if(this.bouncingArrow === null) {
+            this.bouncingArrow = this.game.add.sprite(this.unit.sprite.x, this.unit.sprite.y, 'arrow');
+            this.bouncingArrow.scale = new PIXI.Point(0.5, 0.5);
+        }
+        var anchorX = this.unit.sprite.x+(Math.round(this.unit.sprite.width/2)-(this.bouncingArrow.width/2));
+        var anchorY = this.unit.sprite.y-10-this.bouncingArrowYOffset;
+        this.bouncingArrow.x = anchorX;
+        this.bouncingArrow.y = anchorY;
 
     },
     setDisplayText: function()
