@@ -78,7 +78,7 @@ Drone.prototype = {
                                           plusOne, moveUp, fade = null;
                                       }, this);
 
-                                      that.energy -= 1;
+                                      that.changeEnergy(-1);
                                       that.energyText.setText(that.energy + "%");
 
                                       that.inventory += 0.5;
@@ -125,7 +125,7 @@ Drone.prototype = {
                   var acceptEnergy = function (that) {
                       return function (transferredEnergy) {
                           that.game.time.events.add(Phaser.Timer.SECOND * that.reloadSpeed, function () {
-                          that.energy += transferredEnergy;
+                          that.changeEnergy(transferredEnergy);
                           that.energyText.setText(that.energy + "%");
                           var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
                             font: '25px Arial',
@@ -183,6 +183,18 @@ Drone.prototype = {
             {name: 'Collectspeed', var: 'collectSpeed', add: 0.1},
             {name: 'reloadSpeed', var: 'reloadSpeed', add: 0.1},
         ];
+    },
+    changeEnergy: function (amount) {
+        this.energy += amount;
+        if(this.energy<1) {
+            this.sprite.loadTexture('dronex4');
+        } else if(this.energy>=1 && this.energy <25) {
+            this.sprite.loadTexture('dronex3');
+        } else if(this.energy>=25 && this.energy <50) {
+            this.sprite.loadTexture('dronex2');
+        } else {
+            this.sprite.loadTexture('dronex1');
+        }
     }
 };
 
