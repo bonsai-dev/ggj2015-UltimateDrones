@@ -37,7 +37,7 @@ function Hub(x, y, game){
         if(game.state.getCurrentState().selectedUnit instanceof Drone)
         {
             console.log("Assign Drone to Hub")
-            parent.assignWorker(game.selectedUnit);
+            parent.assignWorker(game.state.getCurrentState().selectedUnit);
             game.state.getCurrentState().selectedUnit = null;
             return;
         }
