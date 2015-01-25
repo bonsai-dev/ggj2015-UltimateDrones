@@ -6,7 +6,7 @@ function MissionScore(game){
     this.game = game;
     this.humansKilled = 0;
     this.timer = null;
-    this.gameTime = 120*1000; //milliseconds
+    this.gameTime = 180*1000; //milliseconds
     this.multiplicator = 1;
 }
 
@@ -23,12 +23,14 @@ MissionScore.prototype = {
         //10 seconds left
         this.timer.add(this.gameTime-10*1000, function()
             {
+                var that = game;
                 var timeWarning = game.add.text(0, game.camera.height/2, '10 seconds left!!!', { font: "60px Arial", fill: "#ffffffff", align: "left" });
                 timeWarning.fixedToCamera = true;
                 timeWarning.cameraOffset.x = (game.camera.width/2)-timeWarning.width/2;
                 var tween = game.add.tween(timeWarning);
-                tween.to( { alpha: 0x00 }, 750, Phaser.Easing.Cubic.InOut, true, 750, 3);
-                tween.onComplete.add(function(){game.remove(timeWarning);}, this);
+                tween.to( { alpha: 0x00 }, 750, Phaser.Easing.Cubic.InOut, false, 750, 3);
+                console.log(tween.onComplete);
+                //tween.onComplete.add(function(){that.remove(timeWarning);}, this);
                 tween.start();
             }
             , this)
