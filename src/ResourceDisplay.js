@@ -40,7 +40,7 @@ ResourceDisplay.prototype.create = function (resStorage) {
 };
 
 ResourceDisplay.prototype.update = function () {
-    this.res1Text.setText(Static.Strings.Resources.resource1Name + ": " +  this.resStorage.resource1);
-    this.res2Text.setText(Static.Strings.Resources.resource2Name + ": " +  this.resStorage.resource2);
-    this.res3Text.setText(Static.Strings.Resources.resource3Name + ": " +  this.resStorage.resource3);
+    this.res1Text.setText(Static.Strings.Resources.resource1Name + ": " +  Math.floor(this.resStorage.resource1));
+    this.res2Text.setText(Static.Strings.Resources.resource2Name + ": " +  Math.floor(this.resStorage.resource2));
+    this.res3Text.setText(Static.Strings.Resources.resource3Name + ": " +  Math.floor(this.resStorage.resource3));
 };

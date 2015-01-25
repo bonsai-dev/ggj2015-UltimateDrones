@@ -1,6 +1,5 @@
-function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite, farmSprite, resource){
+function FirePowerFactory(x, y, xFarm, yFarm, sizeFarm, game, sprite, farmSprite){
     this.game = game;
-    this.resource = resource;
     this.sprite = this.game.add.sprite(x,y, sprite);
     this.sprite.animations.add('active');
     this.sprite.animations.play('active', 6, true);
@@ -40,27 +39,16 @@ function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite, farmSprite, resourc
 
 }
 
-Factory.prototype =
+FirePowerFactory.prototype =
 {
 
     tick: function()
     {
-        if(this.storage>0) {
-            this.storage -= this.productionRate;
-            if(this.resource === 'resource1') {
-                this.game.state.getCurrentState().resStorage.resource1 += this.productionRate;
-            }
-            if(this.resource === 'resource2') {
-                this.game.state.getCurrentState().resStorage.resource2 += this.productionRate;
-            }
-            if(this.resource === 'resource3') {
-                this.game.state.getCurrentState().resStorage.resource3 += this.productionRate;
-            }
-
-        }
-
-        this.text.setText(Math.round(this.storage));
-
+        /*if(this.storage <= this.maximumStorage){
+            this.storage += this.productionRate;
+        }*/
+        this.text.setText(Math.min(Math.floor(this.storage),this.maximumStorage));
+        this.game.missionScore.multiplicator = this.storage/1000;
 
     },
 
@@ -84,12 +72,7 @@ Factory.prototype =
     acceptResources: function() {
         var that = this;
         return function (resources) {
-            if(that.storage + resources < that.maximumStorage) {
-                that.storage += resources;
-            } else {
-                that.storage = that.maximumStorage;
-            }
-
+            that.storage += resources;
         }
     },
     getDisplayNames: function()
@@ -97,14 +80,12 @@ Factory.prototype =
         return [
             {name: 'Assigned workers', var: 'assignedWorkers', type: 'count'},
             {name: 'Storage', var: 'storage', type: 'd'},
-            {name: 'Maximum storage', var: 'maximumStorage', type: 'd'},
             {name: 'Production rate', var: 'productionRate', type: '2f'}
         ];
     },
     getUpgrades: function()
     {
         return [
-            {name: 'Maximum storage', var: 'maximumStorage', add: 1},
             {name: 'Collect speed', var: 'productionRate', add: 0.01},
         ];
     },
