@@ -110,9 +110,9 @@ Hub.prototype =
     {
         return [
             {name: 'Assigned workers', var: 'assignedWorkers', type: 'count'},
-            {name: 'Storage', var: 'storedEnergy'},
-            {name: 'Maximum storage', var: 'maxStoredEnergy'},
-            {name: 'Regeneration rate', var: 'energyRegeneration'}
+            {name: 'Storage', var: 'storedEnergy', type: 'd'},
+            {name: 'Maximum storage', var: 'maxStoredEnergy', type: 'd'},
+            {name: 'Regeneration rate', var: 'energyRegeneration', type: '2f'}
         ];
     },
     getUpgrades: function()

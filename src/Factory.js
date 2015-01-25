@@ -73,9 +73,9 @@ Factory.prototype =
     {
         return [
             {name: 'Assigned workers', var: 'assignedWorkers', type: 'count'},
-            {name: 'Storage', var: 'storage'},
-            {name: 'Maximum storage', var: 'maximumStorage'},
-            {name: 'Production rate', var: 'productionRate'}
+            {name: 'Storage', var: 'storage', type: 'd'},
+            {name: 'Maximum storage', var: 'maximumStorage', type: 'd'},
+            {name: 'Production rate', var: 'productionRate', type: '2f'}
         ];
     },
     getUpgrades: function()
