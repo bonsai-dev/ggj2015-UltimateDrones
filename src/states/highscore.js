@@ -17,7 +17,7 @@ HighScore.prototype = {
     post: function(name, score){
         var parent = this;
         var xmlhttp;
-        var data = JSON.stringify({'name': name, 'score': score});
+        var data = JSON.stringify({'name': name, 'score': Math.round(score)});
         xmlhttp = new XMLHttpRequest();
         xmlhttp.context = this;
         xmlhttp.onreadystatechange = function(){parent.isSubmitted = true;};
@@ -56,7 +56,7 @@ HighScore.prototype = {
             return;
         }
         if(char.charCodeAt(0)==13 || this.name.length > 10) { //Carriage-Return
-            this.post(this.name, Math.floor(Math.random() * 99999));
+            this.post(this.name, Math.floor(this.game.missionScore.humansKilled));
             return;
         }
         if(char.charCodeAt(0)==8) { //Backspace
@@ -76,7 +76,7 @@ HighScore.prototype = {
         });
         scoresString += '\n'
         + 'Congratulations. YOU killed '
-        + this.game.missionScore.humansKilled
+        + Math.round(this.game.missionScore.humansKilled)
         + ' humans!';
 
         this.scoreText.setText(scoresString);

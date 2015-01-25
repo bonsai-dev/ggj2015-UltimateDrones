@@ -34,6 +34,7 @@ Play.prototype = {
     create: function(){
         this.resDisplay = new ResourceDisplay(game);
         this.resStorage = new ResourceStorage();
+        game.missionScore.reset();
 
         //world setup
         this.game.world.setBounds(0, 0, 2048, 2048); //2000x2000
@@ -87,7 +88,8 @@ Play.prototype = {
     update: function(){
         var game = this.game;
         game.missionScore.tick();
-        this.humansKilledText.setText('Humans killed: '+Math.round(game.missionScore.humansKilled));
+        this.humansKilledText.setText('Humans killed: '+Math.round(game.missionScore.humansKilled)
+        +'\nTime left:'+(Math.round((game.missionScore.gameTime/1000 - game.missionScore.timer.ms/1000)).toString()+' seconds'));
         this.humansKilledText.cameraOffset.x = this.game.camera.width - this.humansKilledText.width;
         this.humansKilledText.cameraOffset.y = 8;
         this.resStorage.resource1 +=1; //remove
