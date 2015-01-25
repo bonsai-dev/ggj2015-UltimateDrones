@@ -38,14 +38,15 @@ function Hub(x, y, game){
         {
             console.log("Assign Drone to Hub");
             parent.assignWorker(game.state.getCurrentState().selectedUnit);
-            game.state.getCurrentState().selectedUnit = null;
+            game.state.getCurrentState().setSelectedUnit(null);
             return;
         }
         if(game.state.getCurrentState().selectedUnit == null)
         {
-            game.state.getCurrentState().selectedUnit = parent;
+            game.state.getCurrentState().setSelectedUnit(parent);
         }
     }, this);
+    this.upgradePrice = {resource1: 100,resource2: 100, resource3: 0};
 
 }
 
@@ -113,6 +114,12 @@ Hub.prototype =
             {name: 'Maximum storage', var: 'maxStoredEnergy'},
             {name: 'Regeneration rate', var: 'energyRegeneration'}
         ];
+    },
+    getUpgrades: function()
+    {
+        return [
+            {name: 'Maximum Energy', var: 'maxStoredEnergy', add: 1},
+            {name: 'Energy regeneration', var: 'energyRegeneration', add: 0.01},
+        ];
     }
-
 };
