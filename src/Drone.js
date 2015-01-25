@@ -45,6 +45,10 @@ Drone.prototype = {
   },
   tick: function()
   {
+      if(this.energy <= 0){
+        return;
+      }
+
       if(this.task !== null) {
           if(this.task.type === "collectResource") {
               if(this.status === 'idle') {
