@@ -66,7 +66,7 @@ UnitDisplay.prototype =
                 text+= prop.name + ': ' + value.toString() + '\n';
             }
         );
-        text+= "Upgrade prices: " + '\n'
+        text+= "\nUpgrade prices: " + '\n'
         + Static.Strings.Resources.resource1Name + ": " +  this.unit.upgradePrice.resource1 + '\n'
         + Static.Strings.Resources.resource2Name + ": " +  this.unit.upgradePrice.resource2 + '\n'
         + Static.Strings.Resources.resource3Name + ": " +  this.unit.upgradePrice.resource3 + '\n'
@@ -81,6 +81,8 @@ UnitDisplay.prototype =
         this.unit = unit;
         this.rectangle.clear();
         this.setDisplayText();
+        this.closeButton.tint = 0x555555;
+        this.upgradeButton.tint = 0x555555
         if(this.unit == null)
             return;
         this.rectangle.lineStyle(2, 0x000000, 1);

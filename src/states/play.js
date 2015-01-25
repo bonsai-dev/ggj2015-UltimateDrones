@@ -75,12 +75,18 @@ Play.prototype = {
 
         this.testDrone3.sprite.bringToTop();
         this.loadTestDrone.sprite.bringToTop();
+        this.humansKilledText = this.game.add.text(0, 0, '', { font: "20px Arial", fill: "#ff0044", align: "left" });
+        this.humansKilledText.fixedToCamera = true;
         this.unitDisplay = new UnitDisplay(100,100,game); //Unit Display soll über allem sein
     },
 
 
     update: function(){
         var game = this.game;
+        game.missionScore.tick();
+        this.humansKilledText.setText('Humans killed: '+Math.round(game.missionScore.humansKilled));
+        this.humansKilledText.cameraOffset.x = this.game.camera.width - this.humansKilledText.width;
+        this.humansKilledText.cameraOffset.y = 8;
         this.resStorage.resource1 +=1; //remove
         this.resStorage.resource2 +=2; //remove
         this.resDisplay.update();

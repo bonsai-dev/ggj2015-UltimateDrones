@@ -179,9 +179,9 @@ Drone.prototype = {
     getUpgrades: function()
     {
         return [
-            {name: 'Movespeed', var: 'moveSpeed', add: 0.1},
-            {name: 'Collectspeed', var: 'collectSpeed', add: 0.1},
-            {name: 'reloadSpeed', var: 'reloadSpeed', add: 0.1},
+            {name: 'Movespeed', var: 'moveSpeed', add: 0.01},
+            {name: 'Collectspeed', var: 'collectSpeed', add: -0.01},
+            {name: 'reloadSpeed', var: 'reloadSpeed', add: 0.01},
         ];
     }
 };
