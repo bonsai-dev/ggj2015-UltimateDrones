@@ -164,7 +164,7 @@ UnitDisplay.prototype =
         var parent = this;
         if (this.spawnPrice.resource1 > this.game.state.getCurrentState().resStorage.resource1 ||
             this.spawnPrice.resource2 > this.game.state.getCurrentState().resStorage.resource2 ||
-            this.spawnPrice.resource2 > this.game.state.getCurrentState().resStorage.resource2
+            this.spawnPrice.resource2 > this.game.state.getCurrentState().resStorage.resource3
         ) {
             //Upgrade zu teuer
             return;
