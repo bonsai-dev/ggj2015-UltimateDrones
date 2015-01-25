@@ -13,9 +13,7 @@ function Drone(x, y, game){
     this.age = chance.age();
     this.ssn = chance.ssn();
     this.name = chance.name({prefix: Math.random()<0.5, middle: Math.random()<0.5});
-
-    this.energyText = game.add.text(x, y+ 60, this.energy+"%", this.textStyle);
-
+    
     this.game = game;
     this.sprite = game.add.sprite(x,y, 'dronex1');
     this.sprite.inputEnabled = true;
@@ -38,7 +36,6 @@ Drone.prototype = {
       var tweenSpeed = Math.sqrt((this.sprite.x-mX)*(this.sprite.x-mX)+(this.sprite.y-mY)*(this.sprite.y-mY))/this.moveSpeed;
 
       this.tween.stop(false);
-      this.game.add.tween(this.energyText).to({x: mX, y: mY + 60}, tweenSpeed, Phaser.Easing.Linear.None, true);
       this.tween = this.game.add.tween(this.sprite).to({x: mX, y: mY}, tweenSpeed, Phaser.Easing.Linear.None, true);
       this.tween.onComplete.add(callback, this);
 
@@ -83,7 +80,6 @@ Drone.prototype = {
                                       }, this);
 
                                       that.changeEnergy(-1);
-                                      that.energyText.setText(that.energy + "%");
 
                                       that.inventory += 0.5;
                                       that.status = 'idle';
@@ -130,7 +126,6 @@ Drone.prototype = {
                       return function (transferredEnergy) {
                           that.game.time.events.add(Phaser.Timer.SECOND * that.reloadSpeed, function () {
                           that.changeEnergy(transferredEnergy);
-                          that.energyText.setText(that.energy + "%");
                           var plusOne = that.game.add.text(that.sprite.x, that.sprite.y, '+' + transferredEnergy + "%", {
                             font: '25px Arial',
                             fill: '#3333ff',
