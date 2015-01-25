@@ -3,8 +3,6 @@
 function Play(){
     this.resDisplay = null;
     this.resStorage = null;
-    this.drones = [];
-    this.factorys = [];
     this.selectedUnit = null;
 }
 
@@ -85,15 +83,6 @@ Play.prototype = {
         this.resStorage.resource1 +=1; //remove
         this.resStorage.resource2 +=2; //remove
         this.resDisplay.update();
-
-        var factorys = this.factorys;
-
-        this.massDroneUpdate();
-        this.factorys.forEach(
-            function(factory){
-                factory.tick();
-            }
-        );
 
         this.testDrone.tick();
         this.testDrone2.tick();
