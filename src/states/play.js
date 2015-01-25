@@ -63,13 +63,13 @@ Play.prototype = {
         this.loadTestDrone.changeEnergy(-75);
 
 
-        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1anim", 'farm1');
+        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1anim", 'farm1', 'resource2');
         this.testFactory.assignWorker(this.testDrone);
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
 
-        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,200, this.game, "fab2", 'farm3');
-        this.MetalFactory = new Factory(800, 1200, 1200, 1200 ,256, this.game, "fab3", 'farm2');
+        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,200, this.game, "fab2", 'farm3', 'resource1');
+        this.MetalFactory = new Factory(800, 1200, 1200, 1200 ,256, this.game, "fab3", 'farm2', 'resource3');
        
 
         this.testHub = new Hub(1000, 300, this.game);
@@ -96,11 +96,12 @@ Play.prototype = {
         +'\nTime left:'+(Math.round((game.missionScore.gameTime/1000 - game.missionScore.timer.ms/1000)).toString()+' seconds'));
         this.humansKilledText.cameraOffset.x = this.game.camera.width - this.humansKilledText.width;
         this.humansKilledText.cameraOffset.y = 8;
-        this.resStorage.resource1 +=1; //remove
-        this.resStorage.resource2 +=2; //remove
+
         this.resDisplay.update();
 
         this.testFactory.tick();
+        this.EnergyFactory.tick();
+        this.MetalFactory.tick();
 
         for(var key in this.workerArray)
         {

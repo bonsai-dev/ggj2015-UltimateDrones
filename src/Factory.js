@@ -1,5 +1,6 @@
-function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite, farmSprite){
+function Factory(x, y, xFarm, yFarm, sizeFarm, game, sprite, farmSprite, resource){
     this.game = game;
+    this.resource = resource;
     this.sprite = this.game.add.sprite(x,y, sprite);
     this.sprite.animations.add('active');
     this.sprite.animations.play('active', 6, true);
@@ -44,10 +45,21 @@ Factory.prototype =
 
     tick: function()
     {
-        /*if(this.storage <= this.maximumStorage){
-            this.storage += this.productionRate;
-        }*/
-        this.text.setText(Math.min(Math.floor(this.storage),this.maximumStorage));
+        if(this.storage>0) {
+            this.storage -= this.productionRate;
+            if(this.resource === 'resource1') {
+                this.game.state.getCurrentState().resStorage.resource1 += this.productionRate;
+            }
+            if(this.resource === 'resource2') {
+                this.game.state.getCurrentState().resStorage.resource2 += this.productionRate;
+            }
+            if(this.resource === 'resource3') {
+                this.game.state.getCurrentState().resStorage.resource3 += this.productionRate;
+            }
+
+        }
+
+        this.text.setText(Math.round(this.storage));
 
 
     },
@@ -72,7 +84,12 @@ Factory.prototype =
     acceptResources: function() {
         var that = this;
         return function (resources) {
-            that.storage += resources;
+            if(that.storage + resources < that.maximumStorage) {
+                that.storage += resources;
+            } else {
+                that.storage = that.maximumStorage;
+            }
+
         }
     },
     getDisplayNames: function()
