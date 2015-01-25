@@ -10,17 +10,13 @@ function Play(){
 Play.prototype = {
     preload: function(){
         this.game.load.image('bg', 'assets/bg.png');
-        this.game.load.image('spacer', 'assets/drone.png');
+        //this.game.load.image('spacer', 'assets/drone.png');
         this.game.load.image('dronex1', 'assets/dronex1.png');
         this.game.load.image('dronex2', 'assets/dronex2.png');
         this.game.load.image('dronex3', 'assets/dronex3.png');
         this.game.load.image('dronex4', 'assets/dronex4.png');
         this.game.load.image('dronex5', 'assets/dronex5.png');
 
-        this.game.load.image('factory', 'assets/factory.png');
-        this.game.load.image('fab1', 'assets/fab1.png');
-        this.game.load.image('hub', 'assets/hub.png');
-        this.game.load.image('workshop', 'assets/workshop.png');
         this.game.load.image('crystal', 'assets/crystal.png');
         this.game.load.image('energy', 'assets/energy.png');
         this.game.load.image('farm1', 'assets/farm1.png');
@@ -33,6 +29,7 @@ Play.prototype = {
         this.game.load.spritesheet('hubOver', 'assets/ringalpha.png',128, 128);
 
         this.game.load.spritesheet('fab1anim', 'assets/fab1anim.png', 128, 128);
+        this.game.load.spritesheet('fab2', 'assets/fab2.png', 128, 128);
         this.selectedUnit = null;
     },
 
@@ -67,11 +64,12 @@ Play.prototype = {
         this.factorys.push(new Factory(400, 600, this.game, "factory"));
         this.factorys.push(new Factory(200, 100, this.game, "workshop"));*/
 
-        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1anim");
+        this.testFactory = new Factory(500,500,100,100,256, this.game, "fab1anim", 'farm1');
         this.testFactory.assignWorker(this.testDrone);
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
 
+        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,256, this.game, "fab2", 'farm1');
 
        
 
