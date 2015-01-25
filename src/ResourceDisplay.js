@@ -21,7 +21,7 @@ ResourceDisplay.prototype.create = function (resStorage) {
 
     this.res1Text = this.game.add.text(35, 8, this.initText, this.initStyle);
     this.res1Text.fixedToCamera = true;
-    this.res1Image = this.game.add.image(0,0, 'crystal');
+    this.res1Image = this.game.add.image(0,0, 'energy');
     this.res1Image.fixedToCamera = true;
     this.res1Image.scale = new PIXI.Point(0.5, 0.5);
 

@@ -63,6 +63,7 @@ Hub.prototype =
         if(this.storedEnergy <= this.maxStoredEnergy){
             this.storedEnergy += this.energyRegeneration;
         }
+        this.setRingFrame(this.calcRingFrame());
 
 
     },
@@ -133,6 +134,9 @@ Hub.prototype =
                 this.assignedWorkers.splice(i, 1);
             }
         }
+    },
+    calcRingFrame: function () {
+        return 8-Math.round(this.storedEnergy / 12.5); //0-8
     }
 
 };

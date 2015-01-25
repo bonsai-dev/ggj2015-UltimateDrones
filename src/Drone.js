@@ -192,8 +192,10 @@ Drone.prototype = {
             this.sprite.loadTexture('dronex3');
         } else if(this.energy>=25 && this.energy <50) {
             this.sprite.loadTexture('dronex2');
-        } else {
+        } else if(this.energy>=50 && this.energy <=100){
             this.sprite.loadTexture('dronex1');
+        } else {
+            this.sprite.loadTexture('dronex5');
         }
     }
 };

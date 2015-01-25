@@ -11,13 +11,13 @@ function UnitDisplay(x, y, game){
     this.textObject.fixedToCamera = true;
     this.unit = null;
 
-    this.closeButton = game.add.button(0, 0, 'crystal', this.closeButtonClicked, this);
+    this.closeButton = game.add.button(0, 0, 'close', this.closeButtonClicked, this);
     this.closeButton.fixedToCamera = true;
     this.closeButton.cameraOffset.x = 15;
     this.closeButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
     this.closeButton.tint = 0x555555;
 
-    this.upgradeButton = game.add.button(0, 0, 'crystal', this.upgradeButtonClicked, this);
+    this.upgradeButton = game.add.button(0, 0, 'up', this.upgradeButtonClicked, this);
     this.upgradeButton.fixedToCamera = true;
     this.upgradeButton.cameraOffset.x = 15 + this.closeButton.width + 15 ;
     this.upgradeButton.cameraOffset.y = this.game.camera.height-this.closeButton.height-10;
