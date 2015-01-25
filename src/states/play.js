@@ -17,8 +17,10 @@ Play.prototype = {
         this.game.load.image('dronex5', 'assets/dronex5.png');
         this.game.load.image('crystal', 'assets/crystal.png');
         this.game.load.image('energy', 'assets/energy.png');
+        this.game.load.image('copper', 'assets/copper.png');
         this.game.load.image('farm1', 'assets/farm1.png');
         this.game.load.image('farm2', 'assets/field2.png');
+        this.game.load.image('firepower', 'assets/fire.png');
 
         this.game.load.spritesheet('fab3', 'assets/fab3.png', 128, 128);
         this.game.load.image('farm3', 'assets/field3.png');
@@ -99,11 +101,13 @@ Play.prototype = {
         +'\nTime left:'+(Math.round((game.missionScore.gameTime/1000 - game.missionScore.timer.ms/1000)).toString()+' seconds'));
         this.humansKilledText.cameraOffset.x = this.game.camera.width - this.humansKilledText.width;
         this.humansKilledText.cameraOffset.y = 8;
-        this.resStorage.resource1 +=1; //remove
-        this.resStorage.resource2 +=2; //remove
+
         this.resDisplay.update();
 
         this.testFactory.tick();
+        this.MetalFactory.tick();
+        this.EnergyFactory.tick();
+        this.FirePower.tick();
 
         for(var key in this.workerArray)
         {
