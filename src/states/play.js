@@ -17,6 +17,8 @@ Play.prototype = {
         this.game.load.image('crystal', 'assets/crystal.png');
         this.game.load.image('energy', 'assets/energy.png');
         this.game.load.image('farm1', 'assets/farm1.png');
+        this.game.load.image('farm2', 'assets/field2.png');
+
         this.game.load.image('up', 'assets/up.png');
         this.game.load.image('close', 'assets/x.png');
         this.game.load.image('hubBody', 'assets/main.png');
@@ -57,7 +59,7 @@ Play.prototype = {
         this.testFactory.assignWorker(this.testDrone2);
         this.testFactory.assignWorker(this.testDrone3);
 
-        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,256, this.game, "fab2", 'farm1');
+        this.EnergyFactory = new Factory(1000, 1000, 1500, 1500 ,256, this.game, "fab2", 'farm2');
 
        
 
